@@ -60,6 +60,7 @@
 }
 
 *{box-sizing:border-box}
+body{margin:0}   /* the UA default 8px pushes every full-width block off a phone screen */
 /* overflow-x must be `clip`, never `hidden`: `hidden` promotes <body> to the
    scroll container, which leaves documentElement.scrollTop inert and freezes
    the page under Lenis. `clip` trims horizontal overflow without scrolling. */
@@ -357,17 +358,70 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
 .cur-ring{width:38px;height:38px;border:1px solid var(--accent);margin:-19px 0 0 -19px}
 @media (pointer:coarse){.cur,.cur-ring{display:none}}
 
+/* A grid item will not shrink below its own content unless told to, which is how
+   the panels grew wider than their column and got clipped on a phone. */
+.status-grid>*,.support-grid>*,.cards>*,.metrics>*{min-width:0}
+
 @media (max-width:900px){
   .status-grid,.support-grid{grid-template-columns:1fr}
   .metrics{grid-template-columns:repeat(2,1fr)}
+  .wrap,.wrap-wide{padding:0 20px}
+  .panel{padding:26px 22px 30px;border-radius:22px}
 }
 @media (max-width:620px){
   body{font-size:16px}
-  .answer{font-size:21px}
-  .bar .pill,.bar .navlink{display:none}
+  h1{font-size:clamp(36px,10vw,50px)}
+  h2{font-size:clamp(27px,7.4vw,38px)}
+  h3{font-size:21px}
+  .hero{padding:104px 0 76px}
+  .hero .sub{font-size:17.5px}
+  section{padding:clamp(66px,14vw,96px) 0}
+  .sec-head{margin-bottom:38px}
+  .sec-head p{font-size:17px}
+
+  /* the bar keeps a way out of the page: mark, run log, support */
+  .bar{left:12px;right:12px;transform:none;max-width:none;border-radius:22px}
+  .bar-in{--bar-pad:6px;padding-left:14px;gap:10px}
+  .bar.small .bar-in{--bar-pad:5px;padding-left:12px}
+  .bar .navlink{display:none}
+  .bar .navlink.keep{display:inline;font-size:13px}
+  .bar .pill{display:inline-flex;padding:8px 14px;font-size:13px}
+  .bar .pill .arw{display:none}
+  .logo{font-size:15.5px;margin-right:auto}
+
+  .composer{padding:8px 8px 8px 16px;border-radius:26px}
+  .composer input{font-size:16px}      /* 16px or iOS zooms the page on focus */
+  .composer .plus{display:none}
+  .send{width:36px;height:36px}
+  .chip{padding:9px 15px;font-size:13.5px}
+  .answer-card{padding:20px 18px 16px;border-radius:20px}
+  .answer{font-size:19.5px}
+  .controls{gap:10px}
+  .controls label{font-size:12px}
+  .readout{white-space:normal}
+
+  .metrics{grid-template-columns:repeat(2,1fr);border-radius:14px}
+  .metric{padding:14px 12px 16px}
+  .metric dd{font-size:22px}
+  .prog-row{font-size:13.5px}
+
   .rail-vp{overflow-x:auto}
-  .stage{width:246px}
-  .hero{padding-top:132px}
+  .stage{width:232px;min-height:auto;padding:22px 20px 24px}
+  .rail-foot{padding:0 20px;gap:12px}
+
+  .wont-row{grid-template-columns:1fr;gap:8px;padding:26px 0}
+  .wont b{font-size:22px}
+  .wont p{font-size:15.5px}
+  pre{font-size:12px;padding:20px 18px;border-radius:16px}
+  table{font-size:14.5px}
+  th,td{padding-right:14px}
+  .deck-handle{padding:14px 20px 12px}
+  .foot{font-size:12.5px}
+}
+@media (max-width:380px){
+  .metrics{grid-template-columns:1fr}
+  .chips{gap:8px}
+  .chip{font-size:13px;padding:8px 13px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -393,7 +447,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
       Synth-2
     </span>
     <a class="navlink" href="#method">Method</a>
-    <a class="navlink" href="#status">Run log</a>
+    <a class="navlink keep" href="#status">Run log</a>
     <a class="navlink" href="../">Sane Labs</a>
     <a class="pill solid magnetic" href="#support"><span>Support<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
@@ -868,6 +922,13 @@ Canberra was laid out in 1913 [2].</pre></div>
     el('mCkptSub').textContent=meta.checkpointNote||'';
   }
 
+  /* the drawing is sized in pixels, so it has to be redrawn when that size changes */
+  var reflow=null;
+  window.addEventListener('resize',function(){
+    clearTimeout(reflow);
+    reflow=setTimeout(function(){ if(rows.length) renderRun(); },200);
+  });
+
   function renderRun(){
     if(!rows.length){
       el('chart').innerHTML='<p class="empty">No measurements in the log yet.</p>';
@@ -907,7 +968,15 @@ Canberra was laid out in 1913 [2].</pre></div>
   }
 
   function drawChart(pts,best,last){
-    var W=720,H=212,L=58,R=22,T=18,B=46;
+    /* One SVG user unit = one CSS pixel. A fixed 720-unit viewBox squeezed into a
+       phone rendered the axis labels at about four pixels; sizing the drawing to
+       its container keeps every label at its stated size on any screen. */
+    var host=el('chart');
+    var W=Math.max(280,Math.round(host.clientWidth||720));
+    var narrow=W<520;
+    var H=narrow?190:212,
+        L=narrow?40:58, R=narrow?12:22, T=narrow?16:18, B=narrow?40:46;
+    var fAxis=narrow?11:10.5, fNote=narrow?11:10.5;
     var xs=pts.map(function(p){return p.step;}),ys=pts.map(function(p){return p.loss;});
     var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs);
     var y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys);
@@ -920,12 +989,12 @@ Canberra was laid out in 1913 [2].</pre></div>
     s.push('<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Held-out loss against training step, '+pts.length+' recorded points; latest '+fmt(last.loss,4)+' at step '+comma(last.step)+'.">');
     [y1,(y0+y1)/2,y0].forEach(function(v){
       s.push('<line class="grid" x1="'+L+'" y1="'+Y(v).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(v).toFixed(1)+'"></line>');
-      s.push('<text class="axis" x="'+(L-9)+'" y="'+(Y(v)+4).toFixed(1)+'" text-anchor="end">'+fmt(v,3)+'</text>');
+      s.push('<text class="axis" x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(1)+'" text-anchor="end" style="font-size:'+fAxis+'px">'+fmt(v,narrow?2:3)+'</text>');
     });
     pts.forEach(function(p){
       if(p.lrEvent){
         s.push('<line class="drop" x1="'+X(p.step).toFixed(1)+'" y1="'+T+'" x2="'+X(p.step).toFixed(1)+'" y2="'+(H-B)+'"></line>');
-        s.push('<text class="note" x="'+(X(p.step)+7).toFixed(1)+'" y="'+(T+12)+'">'+esc(p.lrEvent)+'</text>');
+        s.push('<text class="note" x="'+(X(p.step)+6).toFixed(1)+'" y="'+(T+12)+'" style="font-size:'+fNote+'px">'+esc(p.lrEvent)+'</text>');
       }
     });
     s.push('<polyline class="line" id="lossLine" points="'+pts.map(function(p){return X(p.step).toFixed(1)+','+Y(p.loss).toFixed(1);}).join(' ')+'"></polyline>');
@@ -933,10 +1002,12 @@ Canberra was laid out in 1913 [2].</pre></div>
       var cls='dot cdot'+(p===last?' dot-now':(p===best?' dot-best':''));
       s.push('<circle class="'+cls+'" cx="'+X(p.step).toFixed(1)+'" cy="'+Y(p.loss).toFixed(1)+'" r="'+(p===last||p===best?4.5:4)+'"></circle>');
     });
-    if(best!==last) s.push('<text class="note" x="'+X(best.step).toFixed(1)+'" y="'+(Y(best.loss)+20).toFixed(1)+'" text-anchor="middle">best '+fmt(best.loss,4)+'</text>');
-    s.push('<text class="note" x="'+X(last.step).toFixed(1)+'" y="'+(Y(last.loss)-13).toFixed(1)+'" text-anchor="end">now '+fmt(last.loss,4)+'</text>');
-    [pts[0],pts[pts.length-1]].forEach(function(p){
-      s.push('<text class="axis" x="'+X(p.step).toFixed(1)+'" y="'+(H-B+26)+'" text-anchor="middle">'+comma(p.step)+'</text>');
+    if(best!==last) s.push('<text class="note" x="'+X(best.step).toFixed(1)+'" y="'+(Y(best.loss)+19).toFixed(1)+'" text-anchor="middle" style="font-size:'+fNote+'px">best '+fmt(best.loss,4)+'</text>');
+    s.push('<text class="note" x="'+X(last.step).toFixed(1)+'" y="'+(Y(last.loss)-12).toFixed(1)+'" text-anchor="end" style="font-size:'+fNote+'px">now '+fmt(last.loss,4)+'</text>');
+    [[pts[0],'start'],[pts[pts.length-1],'end']].forEach(function(pair){
+      var p=pair[0],anchor=narrow?pair[1]:'middle';
+      var x=narrow?(pair[1]==='start'?L:W-R):X(p.step);
+      s.push('<text class="axis" x="'+(+x).toFixed(1)+'" y="'+(H-B+24)+'" text-anchor="'+anchor+'" style="font-size:'+fAxis+'px">'+comma(p.step)+'</text>');
     });
     s.push('</svg>');
     el('chart').innerHTML=s.join('');
