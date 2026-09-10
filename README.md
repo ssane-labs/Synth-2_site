@@ -1,12 +1,15 @@
-# Synth-2 — site
+# sanelabs.org
 
-Landing page for **Synth-2**, a 1.23B-parameter language model (≈330M active per token)
-trained from scratch by Sane Labs. The page explains what the model is for, and shows the
-real state of the pretraining run.
+The Sane Labs site. Two pages, no build step.
 
-The model itself lives in a separate repository. This one is only the site.
+- `/` — the lab: the model line from Sane-47M through Synth-2, and Sane Studio.
+- `/synth-2/` — **Synth-2**, a 1.23B-parameter language model (≈330M active per token)
+  trained from scratch. What it is for, and the real state of the pretraining run.
 
-## What is on the page
+The models themselves live on the Hub, and the training code in a separate repository.
+This one is only the site.
+
+## What is on the Synth-2 page
 
 - a hand-written mock-up of the output format (per-token uncertainty `u` drawn on an answer);
 - the target configuration, taken from the model's `ARCHITECTURE.md`;
@@ -19,12 +22,13 @@ labelled as a mock-up, because the model is still in pretraining and is not serv
 
 ## Where the numbers come from
 
-`index.html` resolves the run log from three sources, in order, and uses the first that answers:
+`synth-2/index.html` resolves the run log from three sources, in order, and uses the first
+that answers:
 
 1. **Supabase** — tables `run_log` and `run_meta`, read through the REST API with the
    project's *publishable* key. Row-level security allows `SELECT` only; a write with that
    key is refused with `401`. This is why the key is safe to keep in a public file.
-2. **`run-log.json`** — the same data as a file next to the page. Used when Supabase is
+2. **`run-log.json`** — the same data as a file at the site root. Used when Supabase is
    unreachable, and it keeps the site working with no external dependency at all.
 3. the page's own artifact store — only relevant inside a Claude preview, where `fetch`
    is blocked by the sandbox.
@@ -82,20 +86,26 @@ No build step, no dependencies — it is one HTML file.
 python -m http.server 8000
 ```
 
-Then open `http://127.0.0.1:8000`. Opening `index.html` straight from the filesystem also
-works, except that the `run-log.json` fallback cannot be fetched from a `file://` page.
+Then open `http://127.0.0.1:8000`. Opening a page straight from the filesystem also works,
+except that the `run-log.json` fallback cannot be fetched from a `file://` page.
 
 ## Deployment
 
-GitHub Pages, from the default branch, root folder.
+GitHub Pages, from the default branch, root folder, served at **sanelabs.org**
+(the `CNAME` file claims the domain).
 
 ## Layout
 
 ```
-index.html            the whole site: markup, styles, and scripts in one file
-run-log.json          the fallback copy of the training log
-append_run_point.py   appends one measurement to run-log.json
+index.html             the lab page
+synth-2/index.html     the Synth-2 page
+run-log.json           the fallback copy of the training log
+append_run_point.py    appends one measurement to run-log.json
+CNAME                  the custom domain
 ```
+
+Each page is one file — markup, styles and scripts together — and they share no assets,
+so either can be changed without touching the other.
 
 Third-party code is loaded from a CDN and pinned: GSAP with ScrollTrigger for the
 scroll-driven animation, Lenis for smooth scrolling, and Fraunces / Inter / IBM Plex Mono
