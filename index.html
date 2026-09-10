@@ -1106,6 +1106,19 @@ Canberra was laid out in 1913 [2].</pre></div>
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!window.gsap||!window.ScrollTrigger) return;
+
+  /* Nothing may be parked out of sight while the document is hidden: a background
+     tab and a preview renderer both stall requestAnimationFrame, so the reveals
+     would never run and the page would sit there blank. Set up on first sight. */
+  if(document.visibilityState==='hidden'){
+    document.addEventListener('visibilitychange',function once(){
+      if(document.visibilityState!=='visible')return;
+      document.removeEventListener('visibilitychange',once);
+      boot();
+    });
+  }else boot();
+
+  function boot(){
   gsap.registerPlugin(ScrollTrigger);
 
   var lenis=null;
@@ -1186,9 +1199,14 @@ Canberra was laid out in 1913 [2].</pre></div>
   var heroBits=document.querySelectorAll('.hero .anim-up');
   gsap.set(heroChars,{yPercent:112});
   gsap.set(heroBits,{y:26,opacity:0});
-  gsap.timeline({delay:.15,defaults:{ease:"expo.out"}})
+  var intro=gsap.timeline({delay:.15,defaults:{ease:"expo.out"}})
     .to(heroChars,{yPercent:0,duration:1.25,stagger:{each:.014}})
     .to(heroBits,{y:0,opacity:1,duration:1.05,stagger:.075},"-=.95");
+  /* setTimeout still fires in a hidden tab while requestAnimationFrame does not,
+     so if the intro has not played within a few seconds — the tab was switched
+     away mid-animation — snap it to the end rather than leave the masthead blank. */
+  setTimeout(function(){ if(intro.progress()<1) intro.progress(1); },4000);
+
 
   gsap.to("#heroInner",{yPercent:-11,opacity:.15,scale:.97,ease:"none",
     scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:.6}});
@@ -1351,6 +1369,7 @@ Canberra was laid out in 1913 [2].</pre></div>
   }
 
   window.addEventListener('load',function(){ScrollTrigger.refresh();});
+  }
 })();
 </script>
 </body>

@@ -4,368 +4,342 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sane Labs</title>
-<meta name="description" content="Sane Labs builds small language models from scratch — no borrowed weights — whose knowledge is meant to come from the context in front of them rather than from their own parameters.">
+<meta name="description" content="Sane Labs trains small language models from scratch — no borrowed weights — built so their knowledge comes from the text in front of them rather than from their own parameters.">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sane Labs">
-<meta property="og:description" content="Small language models trained from scratch, and the tools around them.">
+<meta property="og:description" content="Small language models trained from scratch. A register of the work.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23141413' stroke-width='2.4' stroke-dasharray='5 4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C46849'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <style>
+/* The lab register. Same family as the Synth-2 page — one accent, the same three
+   faces — but a different object: a left-ruled index, not a centred landing.
+   Deeper paper, no cards, no floating bar, numbers in the margin. */
 :root{
-  --bg:#FAF9F5;--bg-2:#F2F0E8;--bg-3:#EAE7DC;--surface:#FFFFFF;
-  --ink:#141413;--ink-2:#30302E;--ink-3:#73726C;--ink-4:#A3A29B;
-  --line:rgba(20,20,19,.09);--line-2:rgba(20,20,19,.15);
-  --accent:#C46849;--accent-2:#D98E6F;--accent-soft:rgba(196,104,73,.09);--glow:rgba(196,104,73,.16);
+  --paper:#EFECE3;--paper-2:#E7E3D8;--ink:#141413;--ink-2:#3A3A37;--ink-3:#6F6E68;--ink-4:#9C9A92;
+  --rule:rgba(20,20,19,.13);--rule-soft:rgba(20,20,19,.07);
+  --accent:#C46849;--accent-soft:rgba(196,104,73,.10);--glow:rgba(196,104,73,.13);
   --good:#3C6B4F;
-  --shadow:0 0 0 1px rgba(0,0,0,.04),0 2px 8px 0 rgba(0,0,0,.04),0 4px 80px 8px rgba(0,0,0,.024);
-  --shadow-card:0 0 0 1px rgba(20,20,19,.04),0 1px 2px rgba(20,20,19,.03);
-  --shadow-lift:0 0 0 1px rgba(20,20,19,.05),0 22px 48px -18px rgba(20,20,19,.16);
-  --bar-bg:rgba(250,249,245,.66);
   --serif:"Fraunces","Iowan Old Style",Georgia,"Times New Roman",serif;
   --sans:"Inter",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
-  --deck-r:26px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#1C1B19;--bg-2:#232220;--bg-3:#2B2926;--surface:#26241F;
-    --ink:#F2F0E9;--ink-2:#D6D3CA;--ink-3:#9B978D;--ink-4:#6E6B63;
-    --line:rgba(242,240,233,.10);--line-2:rgba(242,240,233,.17);
-    --accent:#DE9070;--accent-2:#E8AB90;--accent-soft:rgba(222,144,112,.12);--glow:rgba(222,144,112,.15);
+    --paper:#191816;--paper-2:#211F1C;--ink:#F0EDE4;--ink-2:#CFCBC1;--ink-3:#928E85;--ink-4:#66635C;
+    --rule:rgba(240,237,228,.14);--rule-soft:rgba(240,237,228,.07);
+    --accent:#DE9070;--accent-soft:rgba(222,144,112,.13);--glow:rgba(222,144,112,.12);
     --good:#7FBF9A;
-    --shadow:0 0 0 1px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.28),0 4px 80px 8px rgba(0,0,0,.2);
-    --shadow-card:0 0 0 1px rgba(255,255,255,.05);
-    --shadow-lift:0 0 0 1px rgba(255,255,255,.07),0 22px 48px -18px rgba(0,0,0,.5);
-    --bar-bg:rgba(28,27,25,.62);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#1C1B19;--bg-2:#232220;--bg-3:#2B2926;--surface:#26241F;
-  --ink:#F2F0E9;--ink-2:#D6D3CA;--ink-3:#9B978D;--ink-4:#6E6B63;
-  --line:rgba(242,240,233,.10);--line-2:rgba(242,240,233,.17);
-  --accent:#DE9070;--accent-2:#E8AB90;--accent-soft:rgba(222,144,112,.12);--glow:rgba(222,144,112,.15);
+  --paper:#191816;--paper-2:#211F1C;--ink:#F0EDE4;--ink-2:#CFCBC1;--ink-3:#928E85;--ink-4:#66635C;
+  --rule:rgba(240,237,228,.14);--rule-soft:rgba(240,237,228,.07);
+  --accent:#DE9070;--accent-soft:rgba(222,144,112,.13);--glow:rgba(222,144,112,.12);
   --good:#7FBF9A;
-  --shadow:0 0 0 1px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.28),0 4px 80px 8px rgba(0,0,0,.2);
-  --shadow-card:0 0 0 1px rgba(255,255,255,.05);
-  --shadow-lift:0 0 0 1px rgba(255,255,255,.07),0 22px 48px -18px rgba(0,0,0,.5);
-  --bar-bg:rgba(28,27,25,.62);
 }
 
 *{box-sizing:border-box}
-/* clip, never hidden — `hidden` promotes <body> to the scroll container */
-html{overflow-x:clip}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:clip}
+html{overflow-x:clip}          /* never `hidden` — it promotes <body> to the scroller */
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 p{margin:0}
-h1,h2,h3{margin:0;font-family:var(--serif);font-weight:330;text-wrap:balance}
-h1{font-size:clamp(50px,8.4vw,104px);line-height:1.015;letter-spacing:-.028em}
-h2{font-size:clamp(32px,4.4vw,52px);line-height:1.07;letter-spacing:-.02em}
-h3{font-size:23px;line-height:1.26;font-weight:400;letter-spacing:-.01em}
 a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+h1,h2,h3{margin:0;font-weight:400}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.label{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
 
-.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.blob{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
-.blob-1{width:54vw;height:54vw;left:-14vw;top:-12vw;background:radial-gradient(circle,var(--glow),transparent 66%)}
-.blob-2{width:44vw;height:44vw;right:-12vw;top:52vh;background:radial-gradient(circle,var(--glow),transparent 66%);opacity:.7}
-.dots{position:absolute;inset:-12% -6%;background-image:radial-gradient(circle at 1px 1px,var(--line-2) 1px,transparent 0);background-size:34px 34px;opacity:.5;will-change:transform}
-.page{position:relative;z-index:1}
+.glow{position:fixed;width:58vw;height:58vw;right:-18vw;top:-14vw;border-radius:50%;
+  background:radial-gradient(circle,var(--glow),transparent 66%);filter:blur(80px);
+  pointer-events:none;z-index:0;will-change:transform}
 
-.bar{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:60;border-radius:999px;
-  border:1px solid var(--line-2);background:var(--bar-bg);
-  backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);
-  box-shadow:0 1px 2px rgba(20,20,19,.05),0 10px 30px -14px rgba(20,20,19,.22);
-  transition:top .4s cubic-bezier(.22,1,.36,1);max-width:calc(100vw - 24px)}
-.bar-in{display:flex;align-items:center;gap:16px;padding:var(--bar-pad) var(--bar-pad) var(--bar-pad) 22px;--bar-pad:7px;transition:padding .4s cubic-bezier(.22,1,.36,1)}
-.bar.small{top:10px}
-.bar.small .bar-in{--bar-pad:5px;padding-left:18px}
-.logo{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:500;letter-spacing:-.015em;white-space:nowrap;text-decoration:none}
-.glyph{width:20px;height:20px;flex:none;display:block}
+/* ---------- the shell: fixed rail + a single column ---------- */
+.shell{position:relative;z-index:1;display:grid;grid-template-columns:300px 1fr;max-width:1360px;margin:0 auto;gap:0}
+.rail{
+  position:sticky;top:0;height:100vh;padding:54px 40px 44px 40px;
+  border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:34px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:17px;font-weight:500;letter-spacing:-.01em}
+.glyph{width:20px;height:20px;flex:none}
 .glyph .ring{transform-origin:50% 50%;animation:spin 34s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.navlink{position:relative;font-size:14.5px;color:var(--ink-2);text-decoration:none;padding:4px 0;white-space:nowrap}
-.navlink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.navlink:hover::after{transform:scaleX(1);transform-origin:left}
-.pill{position:relative;display:inline-flex;align-items:center;gap:9px;overflow:hidden;border-radius:999px;
-  font-size:15px;font-weight:500;font-family:inherit;padding:13px 26px;border:1px solid transparent;
-  cursor:pointer;text-decoration:none;isolation:isolate;background:transparent;color:var(--ink);flex:none}
-.pill span{position:relative;z-index:2;display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
-.pill::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.22,1,.36,1)}
-.pill:hover::before{transform:scaleY(1);transform-origin:top}
-.pill .arw{transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.pill:hover .arw{transform:translateX(4px)}
-.pill.solid{background:var(--ink);color:var(--bg)}
-.pill.solid::before{background:var(--accent)}
-.pill.ghost{color:var(--ink-2);border-color:var(--line-2)}
-.pill.ghost::before{background:var(--bg-3)}
-.bar .pill{padding:10px 18px;font-size:14px}
-
-.w{display:inline-block;white-space:nowrap}
-.cm{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.09em;margin-bottom:-.09em}
-.ci{display:inline-block;will-change:transform}
-.wm{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.11em;margin-bottom:-.11em}
-.wi{display:inline-block;will-change:transform}
-
-.hero{position:relative;padding:180px 0 120px;text-align:center;will-change:transform}
-.hero h1{margin-bottom:28px;max-width:13ch;margin-left:auto;margin-right:auto}
-.hero .sub{font-size:clamp(19px,2.1vw,23px);color:var(--ink-3);max-width:620px;margin:0 auto;line-height:1.55}
-.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-
-.deck{position:relative;background:var(--bg);border-radius:var(--deck-r) var(--deck-r) 0 0;margin-top:calc(var(--deck-r) * -1);border-top:1px solid var(--line)}
-.deck.tinted{background:var(--bg-2)}
-section{padding:clamp(90px,10vw,140px) 0}
-.sec-head{text-align:center;max-width:700px;margin:0 auto clamp(48px,5.5vw,74px)}
-.sec-head .label{display:block;margin-bottom:20px}
-.sec-head .rule{width:64px;height:1px;background:var(--line-2);margin:0 auto 24px;transform-origin:center;will-change:transform}
-.sec-head p{font-size:18px;color:var(--ink-3);margin-top:20px;line-height:1.62}
-
-/* the lineage */
-.line-rail{display:grid;gap:16px}
-.model{
-  display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:start;
-  background:var(--surface);border:1px solid var(--line);border-radius:24px;
-  padding:30px 30px 32px;box-shadow:var(--shadow-card);will-change:transform,opacity;
-  transition:box-shadow .5s cubic-bezier(.22,1,.36,1),border-color .5s ease;
+.rail .said{font-size:14.5px;color:var(--ink-3);line-height:1.6;max-width:30ch}
+.rail nav{display:grid;gap:0;margin-top:auto}
+.rail nav a{
+  display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:baseline;
+  padding:11px 0;border-top:1px solid var(--rule-soft);text-decoration:none;
+  font-size:14.5px;color:var(--ink-2);transition:color .3s ease;
 }
-.model:hover{box-shadow:var(--shadow-lift);border-color:var(--line-2)}
-.model .size{font-family:var(--mono);font-size:13px;color:var(--ink-4);letter-spacing:.1em;padding-top:8px;white-space:nowrap}
-.model h3{margin-bottom:8px}
-.model .what{font-size:16px;color:var(--ink-3);max-width:62ch}
-.model .specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.model .specs span{font-family:var(--mono);font-size:12px;color:var(--ink-3);background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
-.model .go{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-.state{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.rail nav a:last-of-type{border-bottom:1px solid var(--rule-soft)}
+.rail nav a i{font-family:var(--mono);font-style:normal;font-size:11.5px;color:var(--ink-4);transition:color .3s ease}
+.rail nav a:hover,.rail nav a:hover i{color:var(--accent)}
+.rail .foot{font-family:var(--mono);font-size:11px;color:var(--ink-4);line-height:1.7;letter-spacing:.02em}
+.progress{height:2px;background:var(--rule-soft);position:relative;overflow:hidden}
+.progress i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;display:block}
+
+.col{padding:0 clamp(28px,5vw,86px) 0}
+.masthead{padding:120px 0 76px;border-bottom:1px solid var(--rule)}
+.masthead h1{
+  font-family:var(--serif);font-weight:330;font-size:clamp(46px,6.6vw,88px);
+  line-height:1.02;letter-spacing:-.03em;max-width:15ch;
+}
+.masthead .lede{margin-top:30px;font-size:clamp(17px,1.5vw,20px);color:var(--ink-3);max-width:58ch;line-height:1.6}
+.masthead .facts{display:flex;flex-wrap:wrap;gap:0;margin-top:44px}
+.masthead .facts div{padding-right:34px;margin-right:34px;border-right:1px solid var(--rule-soft)}
+.masthead .facts div:last-child{border-right:0;margin-right:0;padding-right:0}
+.masthead .facts dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4)}
+.masthead .facts dd{margin:6px 0 0;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
+
+section{padding:88px 0 0}
+.sec-mark{display:flex;align-items:baseline;gap:16px;margin-bottom:44px}
+.sec-mark i{font-family:var(--mono);font-style:normal;font-size:11.5px;color:var(--accent);letter-spacing:.14em}
+.sec-mark h2{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.sec-mark .bar{flex:1;height:1px;background:var(--rule);transform-origin:left;will-change:transform}
+.sec-note{font-size:17px;color:var(--ink-3);max-width:62ch;margin:-24px 0 46px;line-height:1.62}
+
+/* ---------- the register ---------- */
+.entry{
+  display:grid;grid-template-columns:112px 1fr;gap:34px;
+  padding:38px 0;border-top:1px solid var(--rule);align-items:start;
+  will-change:clip-path,opacity;
+}
+.entry:last-child{border-bottom:1px solid var(--rule)}
+.entry .count{font-family:var(--mono);font-variant-numeric:tabular-nums;line-height:1}
+.entry .count b{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}
+.entry .count span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);margin-top:7px}
+.entry-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.entry-head h3{font-family:var(--serif);font-weight:330;font-size:30px;letter-spacing:-.02em}
+.state{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase}
 .state.open{color:var(--good)}
 .state.closed{color:var(--ink-4)}
 .state.running{color:var(--accent)}
-.model.running{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-soft),var(--shadow-card)}
+.entry p{font-size:16px;color:var(--ink-3);max-width:68ch}
+.spec{display:flex;flex-wrap:wrap;gap:0;margin-top:20px}
+.spec div{padding-right:22px;margin-right:22px;border-right:1px solid var(--rule-soft);margin-bottom:10px}
+.spec div:last-child{border-right:0}
+.spec dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4)}
+.spec dd{margin:4px 0 0;font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.entry .go{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
 
-.evals{width:100%;border-collapse:collapse;font-size:15px;margin-top:20px}
-.evals th{text-align:left;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);padding:0 16px 10px 0;border-bottom:1px solid var(--line-2)}
-.evals td{padding:11px 16px 11px 0;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.evals{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:24px;max-width:640px}
+.evals th{text-align:left;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-4);padding:0 18px 9px 0;border-bottom:1px solid var(--rule)}
+.evals td{padding:10px 18px 10px 0;border-bottom:1px solid var(--rule-soft);color:var(--ink-3)}
 .evals td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 .evals td.win{color:var(--ink);font-weight:600}
 .tablewrap{overflow-x:auto}
 
-.tool{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:34px 32px 36px;box-shadow:var(--shadow-card);will-change:transform,opacity}
-.panel h3{margin-bottom:14px}
-.panel p{color:var(--ink-3);font-size:16px;margin-top:12px}
-.does{display:grid;gap:0;margin-top:22px}
-.does div{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:15.5px}
-.does div:last-child{border-bottom:0}
-.does .k{font-family:var(--mono);font-size:12px;color:var(--ink-4)}
-.tag{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 10px;margin-left:8px}
+.link{
+  display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;
+  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--rule);
+  padding-bottom:3px;transition:border-color .3s ease,color .3s ease;
+}
+.link:hover{color:var(--accent);border-color:var(--accent)}
+.link .arw{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.link:hover .arw{transform:translate(3px,-3px)}
 
+.note{
+  border-left:2px solid var(--accent);padding:4px 0 4px 20px;margin-top:24px;
+  font-size:15px;color:var(--ink-3);max-width:62ch;
+}
 
-.contact{text-align:center;padding:clamp(100px,12vw,160px) 0}
-.contact h2{margin-bottom:20px}
-.contact p{color:var(--ink-3);font-size:18px;max-width:560px;margin:0 auto 34px}
-.contact-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-footer{border-top:1px solid var(--line);padding:36px 0 64px}
-.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--ink-4)}
+.contact-lines{display:grid;gap:0;max-width:640px}
+.contact-lines a{
+  display:grid;grid-template-columns:118px 1fr auto;gap:18px;align-items:baseline;
+  padding:18px 0;border-top:1px solid var(--rule);text-decoration:none;color:inherit;
+}
+.contact-lines a:last-child{border-bottom:1px solid var(--rule)}
+.contact-lines .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-4)}
+.contact-lines .v{font-size:16px}
+.contact-lines .arw{color:var(--ink-4);transition:transform .35s cubic-bezier(.22,1,.36,1),color .3s ease}
+.contact-lines a:hover .v{color:var(--accent)}
+.contact-lines a:hover .arw{transform:translate(3px,-3px);color:var(--accent)}
 
+.tail{padding:70px 0 90px;font-family:var(--mono);font-size:11.5px;color:var(--ink-4);line-height:1.8;letter-spacing:.02em}
+
+/* mobile: the rail becomes a plain header */
+.topbar{display:none}
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    position:sticky;top:0;z-index:40;padding:16px 24px;
+    background:color-mix(in srgb,var(--paper) 86%,transparent);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--rule);
+  }
+  .col{padding:0 24px}
+  .masthead{padding-top:60px}
+  .entry{grid-template-columns:1fr;gap:16px}
+  .entry .count{display:flex;align-items:baseline;gap:12px}
+  .entry .count span{margin-top:0}
+}
 .cur,.cur-ring{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;opacity:0}
 .cur{width:6px;height:6px;background:var(--accent);margin:-3px 0 0 -3px}
-.cur-ring{width:38px;height:38px;border:1px solid var(--accent);margin:-19px 0 0 -19px}
+.cur-ring{width:36px;height:36px;border:1px solid var(--accent);margin:-18px 0 0 -18px}
 @media (pointer:coarse){.cur,.cur-ring{display:none}}
-
-@media (max-width:860px){
-  .tool{grid-template-columns:1fr}
-  .model{grid-template-columns:1fr;gap:14px}
-  .model .go{align-items:flex-start}
-  .model .size{padding-top:0}
-}
-@media (max-width:620px){
-  body{font-size:16px}
-  .bar .navlink{display:none}
-  .hero{padding-top:140px}
-}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="bg-layers" aria-hidden="true">
-  <div class="dots" id="dots"></div>
-  <div class="blob blob-1" id="blob1"></div>
-  <div class="blob blob-2" id="blob2"></div>
-</div>
-
+<div class="glow" id="glow" aria-hidden="true"></div>
 <div class="cur" id="cur" aria-hidden="true"></div>
 <div class="cur-ring" id="curRing" aria-hidden="true"></div>
 
-<header class="bar" id="bar">
-  <div class="bar-in">
-    <a class="logo" href="#top">
-      <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true">
-        <circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle>
-        <circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle>
-      </svg>
+<div class="topbar">
+  <a class="brand" href="#top">
+    <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true"><circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle><circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle></svg>
+    Sane Labs
+  </a>
+  <a class="link magnetic" href="./index.html"><span>Synth-2</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+
+<div class="shell" id="top">
+  <aside class="rail">
+    <a class="brand" href="#top">
+      <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true"><circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle><circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle></svg>
       Sane Labs
     </a>
-    <a class="navlink" href="#models">Models</a>
-    <a class="navlink" href="#studio">Studio</a>
-    <a class="pill solid magnetic" href="./index.html"><span>Synth-2<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-  </div>
-</header>
+    <p class="said">Language models trained from zero, built so their knowledge comes from the text in front of them.</p>
+    <nav>
+      <a href="#models"><i>01</i><span>Models</span></a>
+      <a href="#studio"><i>02</i><span>Studio</span></a>
+      <a href="#contact"><i>03</i><span>Contact</span></a>
+      <a href="./index.html"><i>→</i><span>Synth-2 run log</span></a>
+    </nav>
+    <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+    <div class="foot">No borrowed weights.<br>Own architecture, tokenizer<br>and training code.</div>
+  </aside>
 
-<div class="page" id="top">
+  <main class="col">
+    <header class="masthead">
+      <h1 class="split-chars">Small models that read before they answer.</h1>
+      <p class="lede anim">Four models, each larger than the last, none of them inheriting a single parameter from anywhere else. The thesis does not change with scale: put the knowledge in the context, not in the weights — then the model's job is to read carefully and to stop at the edge of what it was given.</p>
+      <dl class="facts anim">
+        <div><dt>Models</dt><dd>4</dd></div>
+        <div><dt>Largest</dt><dd>1.23B</dd></div>
+        <div><dt>Published</dt><dd>2</dd></div>
+        <div><dt>Borrowed weights</dt><dd>0</dd></div>
+      </dl>
+    </header>
 
-<section class="hero">
-  <div class="wrap">
-    <h1 class="split-chars">Small models that read before they answer.</h1>
-    <p class="sub anim-up">Sane Labs trains language models from scratch — own architecture, own tokenizer, own training code, not one borrowed weight. Each one is built so its knowledge comes from the text in front of it rather than from its own parameters.</p>
-    <div class="hero-cta anim-up">
-      <a class="pill solid magnetic" href="#models"><span>The models<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="pill ghost magnetic" href="https://github.com/ssane-labs" target="_blank" rel="noopener noreferrer"><span>GitHub</span></a>
-    </div>
-  </div>
-</section>
+    <section id="models">
+      <div class="sec-mark"><i>01</i><h2>The models</h2><span class="bar"></span></div>
+      <p class="sec-note anim">Two are on Hugging Face and can be downloaded and run on a CPU today. One is kept private. One is still training.</p>
 
-<div class="deck tinted" id="models">
-  <div class="wrap">
-    <section>
-      <div class="sec-head">
-        <span class="label anim-up">One line, four sizes</span>
-        <div class="rule"></div>
-        <h2 class="split-words">Every model trained from zero</h2>
-        <p class="anim-up">Same thesis at every scale: put the knowledge in the context, not in the weights. Each model is larger than the last, and none of them inherits a single parameter from anywhere else.</p>
-      </div>
-
-      <div class="line-rail">
-        <article class="model">
-          <span class="size">46.7M</span>
-          <div>
-            <h3>Sane-47M</h3>
-            <p class="what">The first one that worked. It knows what it is, holds a short conversation, and — the useful part — reads a supplied <span class="mono">&lt;|context|&gt;</span> and copies the right value out of it, including out of noisy search results with distractors, and says so when the answer is not in the passage.</p>
-            <div class="specs">
-              <span>12 layers · d_model 512</span><span>context 1024</span><span>own BPE, 16k</span>
-              <span>≈4.4B tokens</span><span>2×T4 → TPU v5e-8</span><span>fp16 · 105 MiB</span>
-            </div>
-          </div>
+      <article class="entry">
+        <div class="count"><b>46.7M</b><span>parameters</span></div>
+        <div>
+          <div class="entry-head"><h3>Sane-47M</h3><span class="state open">Published</span></div>
+          <p>The first one that worked. It knows what it is, holds a short conversation, and — the useful part — reads a supplied <span class="mono">&lt;|context|&gt;</span> and copies the right value out of it, including out of noisy search results full of distractors, and says so when the answer is not in the passage.</p>
+          <dl class="spec">
+            <div><dt>Shape</dt><dd>12 × 512</dd></div>
+            <div><dt>Context</dt><dd>1024</dd></div>
+            <div><dt>Tokenizer</dt><dd>own BPE, 16k</dd></div>
+            <div><dt>Trained on</dt><dd>≈4.4B tokens</dd></div>
+            <div><dt>Hardware</dt><dd>2×T4 → TPU v5e-8</dd></div>
+            <div><dt>Weights</dt><dd>fp16, 105 MiB</dd></div>
+          </dl>
           <div class="go">
-            <span class="state open">Published</span>
-            <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka/sane-47m" target="_blank" rel="noopener noreferrer"><span>Model card</span></a>
-          </div>
-        </article>
-
-        <article class="model">
-          <span class="size">118.5M</span>
-          <div>
-            <h3>Sane-118M</h3>
-            <p class="what">The same design 2.5× over, sharing the tokenizer with Sane-47M. Six hours on a TPU v5e-8, WSD schedule, and it clears GPT-2 small on two of the three tasks it was measured against — on a quarter of GPT-2's training budget.</p>
-            <div class="specs">
-              <span>15 layers · d_model 768</span><span>context 1024</span><span>≈3.6B tokens</span>
-              <span>TPU v5e-8 · ~6 h</span><span>fp16 · 249 MiB</span>
-            </div>
-            <div class="tablewrap">
-              <table class="evals">
-                <thead><tr><th>Zero-shot, 200 examples</th><th>Sane-118M</th><th>Random</th><th>GPT-2 small</th></tr></thead>
-                <tbody>
-                  <tr><td>HellaSwag · acc_norm</td><td class="n win">36.0</td><td class="n">25.0</td><td class="n">~31</td></tr>
-                  <tr><td>ARC-Easy · acc</td><td class="n win">47.5</td><td class="n">25.0</td><td class="n">~44</td></tr>
-                  <tr><td>LAMBADA · acc</td><td class="n">22.0</td><td class="n">~0</td><td class="n">~33</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="go">
-            <span class="state open">Published</span>
-            <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka/sane-118m" target="_blank" rel="noopener noreferrer"><span>Model card</span></a>
-          </div>
-        </article>
-
-        <article class="model">
-          <span class="size">~500M</span>
-          <div>
-            <h3>Sane-500M</h3>
-            <p class="what">The step between the small models and Synth-2. Trained, kept private, and not released: it exists as the scale check that the recipe survives past a hundred million parameters.</p>
-            <div class="specs"><span>not published</span></div>
-          </div>
-          <div class="go"><span class="state closed">Private</span></div>
-        </article>
-
-        <article class="model running">
-          <span class="size">1.23B</span>
-          <div>
-            <h3>Synth-2</h3>
-            <p class="what">The current work, and the first one that carries the idea in its architecture rather than in its training data: an epistemic head on every layer predicts the model's own error per token, so the answer can show which span to check. It reads a search results page and answers only from it.</p>
-            <div class="specs">
-              <span>24 layers · d_model 768</span><span>~330M active of 1.23B</span><span>12 experts + 1 shared</span>
-              <span>context 8k → 32k</span><span>JAX · TPU v5e-8</span>
-            </div>
-          </div>
-          <div class="go">
-            <span class="state running">In training</span>
-            <a class="pill ghost magnetic" href="./index.html"><span>Live run log</span></a>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
-</div>
-
-<div class="deck" id="studio">
-  <div class="wrap">
-    <section>
-      <div class="sec-head">
-        <span class="label anim-up">Not a model</span>
-        <div class="rule"></div>
-        <h2 class="split-words">Sane Studio</h2>
-        <p class="anim-up">A desktop agent for Windows that does the work on your own machine, with your own model keys.</p>
-      </div>
-      <div class="tool">
-        <div class="panel">
-          <h3>What it does while you are busy</h3>
-          <div class="does">
-            <div><span class="k">01</span><span>Edits a project and runs commands in it</span></div>
-            <div><span class="k">02</span><span>Clicks buttons on websites <span class="tag">experiment</span></span></div>
-            <div><span class="k">03</span><span>Answers out loud when called by name <span class="tag">experiment</span></span></div>
-            <div><span class="k">04</span><span>Answers from your own folders</span></div>
-            <div><span class="k">05</span><span>Reachable from a phone, through Telegram</span></div>
-            <div><span class="k">06</span><span>Runs tasks on a schedule</span></div>
-            <div><span class="k">07</span><span>Any model, your own API keys</span></div>
+            <a class="link magnetic" href="https://huggingface.co/sekund0chka/sane-47m" target="_blank" rel="noopener noreferrer"><span>Model card</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
         </div>
-        <div class="panel">
-          <h3>How it ships</h3>
-          <p>The app and its website read one manifest, so a release cannot leave them disagreeing: the installer checks it daily, compares versions and verifies the download against its <span class="mono">sha256</span>.</p>
-          <p>Free to use, with paid tiers for the parts that save hours rather than minutes.</p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
-            <a class="pill solid magnetic" href="https://github.com/ssane-labs/Sane-Studio" target="_blank" rel="noopener noreferrer"><span>Source<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      </article>
+
+      <article class="entry">
+        <div class="count"><b>118.5M</b><span>parameters</span></div>
+        <div>
+          <div class="entry-head"><h3>Sane-118M</h3><span class="state open">Published</span></div>
+          <p>The same design 2.5× over, sharing a tokenizer with Sane-47M. Six hours on a TPU v5e-8 on a WSD schedule — and it clears GPT-2 small on two of the three tasks it was measured against, on a fraction of GPT-2's budget. The third it loses, which is also on the card.</p>
+          <dl class="spec">
+            <div><dt>Shape</dt><dd>15 × 768</dd></div>
+            <div><dt>Context</dt><dd>1024</dd></div>
+            <div><dt>Trained on</dt><dd>≈3.6B tokens</dd></div>
+            <div><dt>Hardware</dt><dd>TPU v5e-8, ~6 h</dd></div>
+            <div><dt>Weights</dt><dd>fp16, 249 MiB</dd></div>
+          </dl>
+          <div class="tablewrap">
+            <table class="evals">
+              <thead><tr><th>Zero-shot · 200 examples</th><th>Sane-118M</th><th>Random</th><th>GPT-2 small</th></tr></thead>
+              <tbody>
+                <tr><td>HellaSwag · acc_norm</td><td class="n win">36.0</td><td class="n">25.0</td><td class="n">~31</td></tr>
+                <tr><td>ARC-Easy · acc</td><td class="n win">47.5</td><td class="n">25.0</td><td class="n">~44</td></tr>
+                <tr><td>LAMBADA · acc</td><td class="n">22.0</td><td class="n">~0</td><td class="n">~33</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="go">
+            <a class="link magnetic" href="https://huggingface.co/sekund0chka/sane-118m" target="_blank" rel="noopener noreferrer"><span>Model card</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-</div>
+      </article>
 
-<div class="deck tinted">
-  <div class="wrap">
-    <section class="contact">
-      <h2 class="split-words">Corrections welcome.</h2>
-      <p class="anim-up">Every number on these pages is reproducible, so if one looks wrong, saying so is worth more than a compliment.</p>
-      <div class="contact-row anim-up">
-        <a class="pill solid magnetic" href="mailto:ssanelabs@gmail.com?subject=Sane%20Labs"><span>ssanelabs@gmail.com</span></a>
-        <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka" target="_blank" rel="noopener noreferrer"><span>Hugging Face</span></a>
-        <a class="pill ghost magnetic" href="https://boosty.to/fabrix.com/donate" target="_blank" rel="noopener noreferrer"><span>Support</span></a>
-      </div>
+      <article class="entry">
+        <div class="count"><b>~500M</b><span>parameters</span></div>
+        <div>
+          <div class="entry-head"><h3>Sane-500M</h3><span class="state closed">Private</span></div>
+          <p>The step between the small models and Synth-2, and the reason there is one: it is the check that the recipe survives past a hundred million parameters. Trained, kept private, not released.</p>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="count"><b>1.23B</b><span>parameters</span></div>
+        <div>
+          <div class="entry-head"><h3>Synth-2</h3><span class="state running">In training</span></div>
+          <p>The current work, and the first one carrying the idea in its architecture rather than in its training data. A small head on every layer predicts the model's own error for each token, so an answer can show which span to check rather than asking to be trusted whole. It reads a search results page and answers only from it.</p>
+          <dl class="spec">
+            <div><dt>Shape</dt><dd>24 × 768</dd></div>
+            <div><dt>Active</dt><dd>~330M of 1.23B</dd></div>
+            <div><dt>Experts</dt><dd>12 + 1 shared</dd></div>
+            <div><dt>Context</dt><dd>8k → 32k</dd></div>
+            <div><dt>Stack</dt><dd>JAX · TPU v5e-8</dd></div>
+          </dl>
+          <div class="go">
+            <a class="link magnetic" href="./index.html"><span>Live run log</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
     </section>
-    <footer>
-      <div class="wrap foot">
-        <span>Sane Labs · trained from scratch, no borrowed weights</span>
-        <span>Sane-47M and Sane-118M under the Sane Community License 1.0</span>
+
+    <section id="studio">
+      <div class="sec-mark"><i>02</i><h2>Alongside</h2><span class="bar"></span></div>
+      <article class="entry" style="border-bottom:1px solid var(--rule)">
+        <div class="count"><b>—</b><span>unreleased</span></div>
+        <div>
+          <div class="entry-head"><h3>Sane Studio</h3><span class="state closed">Not released</span></div>
+          <p>A parallel project, not a model: a desktop agent that does the work on your own machine, with your own model keys — editing a project and running commands in it, answering from your own folders, reachable from a phone.</p>
+          <div class="note">Still in development and currently not published anywhere. It is listed here because it is part of the work, not because there is anything to download yet.</div>
+        </div>
+      </article>
+    </section>
+
+    <section id="contact">
+      <div class="sec-mark"><i>03</i><h2>Contact</h2><span class="bar"></span></div>
+      <p class="sec-note anim">Every figure on these pages comes from a measurement that can be repeated. If one looks wrong, saying so is worth more than a compliment.</p>
+      <div class="contact-lines">
+        <a href="mailto:ssanelabs@gmail.com?subject=Sane%20Labs">
+          <span class="k">Email</span><span class="v">ssanelabs@gmail.com</span>
+          <svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://huggingface.co/sekund0chka" target="_blank" rel="noopener noreferrer">
+          <span class="k">Models</span><span class="v">huggingface.co/sekund0chka</span>
+          <svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://github.com/ssane-labs" target="_blank" rel="noopener noreferrer">
+          <span class="k">Code</span><span class="v">github.com/ssane-labs</span>
+          <svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://boosty.to/fabrix.com/donate" target="_blank" rel="noopener noreferrer">
+          <span class="k">Support</span><span class="v">boosty.to/fabrix.com</span>
+          <svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </footer>
-  </div>
-</div>
+      <div class="tail">Sane-47M and Sane-118M are released under the Sane Community License 1.0.<br>Sane Labs · 2026</div>
+    </section>
+  </main>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -375,13 +349,26 @@ footer{border-top:1px solid var(--line);padding:36px 0 64px}
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!window.gsap||!window.ScrollTrigger) return;
+
+  /* Nothing may be parked out of sight while the document is hidden: a background
+     tab and a preview renderer both stall requestAnimationFrame, so the reveals
+     would never run and the page would sit there blank. Set up on first sight. */
+  if(document.visibilityState==='hidden'){
+    document.addEventListener('visibilitychange',function once(){
+      if(document.visibilityState!=='visible')return;
+      document.removeEventListener('visibilitychange',once);
+      boot();
+    });
+  }else boot();
+
+  function boot(){
   gsap.registerPlugin(ScrollTrigger);
 
   var lenis=null;
   if(window.Lenis){
     lenis=new Lenis({duration:1.15,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},smoothWheel:true});
     lenis.on('scroll',ScrollTrigger.update);
-    gsap.ticker.add(function(time){lenis.raf(time*1000);});
+    gsap.ticker.add(function(t){lenis.raf(t*1000);});
     gsap.ticker.lagSmoothing(0);
     document.querySelectorAll('a[href^="#"]').forEach(function(a){
       a.addEventListener('click',function(e){
@@ -389,15 +376,14 @@ footer{border-top:1px solid var(--line);padding:36px 0 64px}
         var node=document.querySelector(t);
         if(!node)return;
         e.preventDefault();
-        if(lenis) lenis.scrollTo(node,{offset:-80});
+        if(lenis) lenis.scrollTo(node,{offset:-40});
         else node.scrollIntoView({behavior:'smooth',block:'start'});
       });
     });
-    /* smooth scrolling is a nicety, scrolling is not */
     var strikes=0;
     window.addEventListener('wheel',function(e){
       if(!lenis)return;
-      var max=document.documentElement.scrollHeight-window.innerHeight, y0=window.scrollY;
+      var max=document.documentElement.scrollHeight-window.innerHeight,y0=window.scrollY;
       if(!((e.deltaY>0&&y0<max-2)||(e.deltaY<0&&y0>2)))return;
       setTimeout(function(){
         if(!lenis)return;
@@ -415,76 +401,80 @@ footer{border-top:1px solid var(--line);padding:36px 0 64px}
     parts.forEach(function(p){
       if(p==='')return;
       if(/^\s+$/.test(p)){node.appendChild(document.createTextNode(p));return;}
-      var w=document.createElement('span');w.className='w';
+      var w=document.createElement('span');
+      w.style.display='inline-block';w.style.whiteSpace='nowrap';
       p.split('').forEach(function(ch){
-        var m=document.createElement('span');m.className='cm';
-        var i=document.createElement('span');i.className='ci';i.textContent=ch;
+        var m=document.createElement('span');
+        m.style.display='inline-block';m.style.overflow='hidden';m.style.verticalAlign='bottom';
+        m.style.paddingBottom='.09em';m.style.marginBottom='-.09em';
+        var i=document.createElement('span');
+        i.style.display='inline-block';i.style.willChange='transform';i.textContent=ch;
         m.appendChild(i);w.appendChild(m);out.push(i);
       });
       node.appendChild(w);
     });
     return out;
   }
-  function splitWords(node){
-    var parts=node.textContent.split(/(\s+)/),out=[];
-    node.textContent='';
-    parts.forEach(function(p){
-      if(p==='')return;
-      if(/^\s+$/.test(p)){node.appendChild(document.createTextNode(p));return;}
-      var m=document.createElement('span');m.className='wm';
-      var i=document.createElement('span');i.className='wi';i.textContent=p;
-      m.appendChild(i);node.appendChild(m);out.push(i);
-    });
-    return out;
-  }
 
-  var heroChars=splitChars(document.querySelector('.hero h1'));
-  var heroBits=document.querySelectorAll('.hero .anim-up');
-  gsap.set(heroChars,{yPercent:112});
-  gsap.set(heroBits,{y:26,opacity:0});
-  gsap.timeline({delay:.15,defaults:{ease:"expo.out"}})
-    .to(heroChars,{yPercent:0,duration:1.25,stagger:{each:.014}})
-    .to(heroBits,{y:0,opacity:1,duration:1.05,stagger:.08},"-=.95");
+  /* masthead arrives once, from the left edge — not the centred rise of the Synth-2 page */
+  var chars=splitChars(document.querySelector('.masthead h1'));
+  var bits=document.querySelectorAll('.masthead .anim');
+  gsap.set(chars,{yPercent:110});
+  gsap.set(bits,{x:-18,opacity:0});
+  var intro=gsap.timeline({delay:.12,defaults:{ease:"expo.out"}})
+    .to(chars,{yPercent:0,duration:1.2,stagger:{each:.013}})
+    .to(bits,{x:0,opacity:1,duration:1,stagger:.09},"-=.9");
+  /* setTimeout still fires in a hidden tab while requestAnimationFrame does not,
+     so if the intro has not played within a few seconds — the tab was switched
+     away mid-animation — snap it to the end rather than leave the masthead blank. */
+  setTimeout(function(){ if(intro.progress()<1) intro.progress(1); },4000);
 
-  gsap.to(".hero",{yPercent:-9,opacity:.2,ease:"none",
-    scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:.6}});
-  gsap.to("#dots",{yPercent:12,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:.8}});
-  gsap.to("#blob1",{yPercent:50,xPercent:10,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:1.1}});
-  gsap.to("#blob2",{yPercent:-44,xPercent:-9,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:1.4}});
 
-  ScrollTrigger.create({start:"top -50",
-    onUpdate:function(self){document.getElementById('bar').classList.toggle('small',self.scroll()>50);},
-    onToggle:function(self){document.getElementById('bar').classList.toggle('small',self.isActive);}});
+  /* the rail's progress line tracks the whole document */
+  gsap.to("#prog",{scaleX:1,ease:"none",
+    scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:.4}});
+  gsap.to("#glow",{yPercent:46,xPercent:-8,ease:"none",
+    scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:1.2}});
 
-  gsap.utils.toArray('.deck').forEach(function(d){
-    gsap.fromTo(d,{y:40},{y:0,ease:"none",scrollTrigger:{trigger:d,start:"top bottom",end:"top 62%",scrub:.7}});
+  /* section rules draw themselves */
+  gsap.utils.toArray('.sec-mark .bar').forEach(function(bar){
+    gsap.fromTo(bar,{scaleX:0},{scaleX:1,duration:1.2,ease:"expo.out",
+      scrollTrigger:{trigger:bar,start:"top 92%",toggleActions:"play none none reverse"}});
   });
-  document.querySelectorAll('.split-words').forEach(function(h){
-    var words=splitWords(h);
-    gsap.set(words,{yPercent:112});
-    gsap.to(words,{yPercent:0,duration:1.05,ease:"expo.out",stagger:.05,
-      scrollTrigger:{trigger:h,start:"top 88%",toggleActions:"play none none reverse"}});
+  document.querySelectorAll('.sec-note,.anim').forEach(function(n){
+    if(n.closest('.masthead'))return;
+    gsap.fromTo(n,{x:-16,opacity:0},{x:0,opacity:1,duration:.9,ease:"expo.out",
+      scrollTrigger:{trigger:n,start:"top 92%",toggleActions:"play none none reverse"}});
   });
-  document.querySelectorAll('.sec-head .rule').forEach(function(r){
-    gsap.fromTo(r,{scaleX:0},{scaleX:1,duration:1.1,ease:"expo.out",
-      scrollTrigger:{trigger:r,start:"top 92%",toggleActions:"play none none reverse"}});
+
+  /* register rows wipe open from the left, rather than fading up as cards */
+  gsap.utils.toArray('.entry').forEach(function(row){
+    gsap.fromTo(row,
+      {clipPath:"inset(0 100% 0 0)",opacity:.25},
+      {clipPath:"inset(0 0% 0 0)",opacity:1,duration:1.15,ease:"expo.out",
+       scrollTrigger:{trigger:row,start:"top 88%",toggleActions:"play none none reverse"}});
+    gsap.fromTo(row.querySelector('.count'),{y:16,opacity:0},{y:0,opacity:1,duration:.9,ease:"expo.out",delay:.12,
+      scrollTrigger:{trigger:row,start:"top 88%",toggleActions:"play none none reverse"}});
   });
-  document.querySelectorAll('.anim-up').forEach(function(node){
-    if(node.closest('.hero'))return;
-    gsap.fromTo(node,{y:24,opacity:0},{y:0,opacity:1,duration:.95,ease:"expo.out",
-      scrollTrigger:{trigger:node,start:"top 92%",toggleActions:"play none none reverse"}});
+  gsap.utils.toArray('.contact-lines a').forEach(function(a,i){
+    gsap.fromTo(a,{x:-14,opacity:0},{x:0,opacity:1,duration:.8,ease:"expo.out",delay:i*.07,
+      scrollTrigger:{trigger:'.contact-lines',start:"top 90%",toggleActions:"play none none reverse"}});
   });
-  gsap.utils.toArray('.model').forEach(function(m,i){
-    gsap.fromTo(m,{y:52,opacity:0},{y:0,opacity:1,duration:1.05,ease:"expo.out",
-      scrollTrigger:{trigger:m,start:"top 90%",toggleActions:"play none none reverse"}});
+  gsap.utils.toArray('.evals tr').forEach(function(r,i){
+    gsap.fromTo(r,{opacity:0},{opacity:1,duration:.6,ease:"none",delay:i*.06,
+      scrollTrigger:{trigger:'.evals',start:"top 92%",toggleActions:"play none none reverse"}});
   });
-  gsap.utils.toArray('.panel').forEach(function(p,i){
-    gsap.fromTo(p,{y:50,opacity:0},{y:0,opacity:1,duration:1.05,ease:"expo.out",delay:i*.1,
-      scrollTrigger:{trigger:p,start:"top 88%",toggleActions:"play none none reverse"}});
-  });
-  gsap.utils.toArray('.does div').forEach(function(d,i){
-    gsap.fromTo(d,{x:-14,opacity:0},{x:0,opacity:1,duration:.7,ease:"expo.out",delay:i*.05,
-      scrollTrigger:{trigger:'.does',start:"top 90%",toggleActions:"play none none reverse"}});
+
+  /* the nav marks where you are */
+  var links=gsap.utils.toArray('.rail nav a[href^="#"]');
+  links.forEach(function(a){
+    var target=document.querySelector(a.getAttribute('href'));
+    if(!target)return;
+    ScrollTrigger.create({trigger:target,start:"top 40%",end:"bottom 40%",
+      onToggle:function(self){
+        a.style.color=self.isActive?'var(--accent)':'';
+        a.querySelector('i').style.color=self.isActive?'var(--accent)':'';
+      }});
   });
 
   if(window.matchMedia('(pointer:fine)').matches){
@@ -493,10 +483,10 @@ footer{border-top:1px solid var(--line);padding:36px 0 64px}
         rx=gsap.quickTo(ring,"x",{duration:.5,ease:"power3"}),ry=gsap.quickTo(ring,"y",{duration:.5,ease:"power3"});
     var over=0;
     window.addEventListener('mousemove',function(e){cx(e.clientX);cy(e.clientY);rx(e.clientX);ry(e.clientY);});
-    document.querySelectorAll('a,button,.magnetic,.model').forEach(function(node){
+    document.querySelectorAll('a,button,.entry').forEach(function(node){
       node.addEventListener('mouseenter',function(){
         over++;gsap.to([cur,ring],{opacity:1,duration:.25,overwrite:"auto"});
-        gsap.to(ring,{scale:1.6,duration:.35,overwrite:"auto"});
+        gsap.to(ring,{scale:1.55,duration:.35,overwrite:"auto"});
       });
       node.addEventListener('mouseleave',function(){
         over=Math.max(0,over-1);
@@ -508,13 +498,14 @@ footer{border-top:1px solid var(--line);padding:36px 0 64px}
       var mx=gsap.quickTo(node,"x",{duration:.5,ease:"power3"}),my=gsap.quickTo(node,"y",{duration:.5,ease:"power3"});
       node.addEventListener('mousemove',function(e){
         var r=node.getBoundingClientRect();
-        mx((e.clientX-(r.left+r.width/2))*.3);my((e.clientY-(r.top+r.height/2))*.4);
+        mx((e.clientX-(r.left+r.width/2))*.25);my((e.clientY-(r.top+r.height/2))*.35);
       });
       node.addEventListener('mouseleave',function(){mx(0);my(0);});
     });
   }
 
   window.addEventListener('load',function(){ScrollTrigger.refresh();});
+  }
 })();
 </script>
 </body>
