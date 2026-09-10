@@ -1,0 +1,14 @@
+# local scratch
+*.bak
+*.bak.json
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# never commit secrets — the publishable Supabase key in index.html is public by design,
+# anything below is not
+.env
+.env.*
+*.pem
+*.key

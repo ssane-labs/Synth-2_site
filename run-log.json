@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "totalSteps": 200000,
+    "tokensPerStep": 65536,
+    "stage": "B",
+    "stageLabel": "Pretraining",
+    "hardware": "Kaggle TPU v5e-8",
+    "mfu": 5.9,
+    "expertShare": 22.3,
+    "checkpointGb": 9.3,
+    "checkpointNote": "step-82000, private"
+  },
+  "points": [
+    {
+      "step": 62450,
+      "loss": 2.222,
+      "recordedOn": "2026-09-06",
+      "lrEvent": "LR / 3",
+      "note": "Peak LR cut three-fold on the probe"
+    },
+    {
+      "step": 66000,
+      "loss": 2.0084,
+      "recordedOn": "2026-09-06",
+      "note": "First 3,550 steps after the cut: -0.060 per 1k steps"
+    },
+    {
+      "step": 69000,
+      "loss": 1.9729,
+      "recordedOn": "2026-09-07",
+      "note": "Best held-out loss so far"
+    },
+    {
+      "step": 82000,
+      "loss": 2.0318,
+      "recordedOn": "2026-09-07",
+      "trendPer1k": 0.0018,
+      "trendNote": "OLS over 17 samples, session of 7 Sep",
+      "note": "16,000 further steps at the lowered LR moved nothing"
+    }
+  ]
+}
