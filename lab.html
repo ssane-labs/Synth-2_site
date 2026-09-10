@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sane Labs</title>
+<meta name="description" content="Sane Labs builds small language models from scratch — no borrowed weights — whose knowledge is meant to come from the context in front of them rather than from their own parameters.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sane Labs">
+<meta property="og:description" content="Small language models trained from scratch, and the tools around them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23141413' stroke-width='2.4' stroke-dasharray='5 4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C46849'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --bg:#FAF9F5;--bg-2:#F2F0E8;--bg-3:#EAE7DC;--surface:#FFFFFF;
+  --ink:#141413;--ink-2:#30302E;--ink-3:#73726C;--ink-4:#A3A29B;
+  --line:rgba(20,20,19,.09);--line-2:rgba(20,20,19,.15);
+  --accent:#C46849;--accent-2:#D98E6F;--accent-soft:rgba(196,104,73,.09);--glow:rgba(196,104,73,.16);
+  --good:#3C6B4F;
+  --shadow:0 0 0 1px rgba(0,0,0,.04),0 2px 8px 0 rgba(0,0,0,.04),0 4px 80px 8px rgba(0,0,0,.024);
+  --shadow-card:0 0 0 1px rgba(20,20,19,.04),0 1px 2px rgba(20,20,19,.03);
+  --shadow-lift:0 0 0 1px rgba(20,20,19,.05),0 22px 48px -18px rgba(20,20,19,.16);
+  --bar-bg:rgba(250,249,245,.66);
+  --serif:"Fraunces","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Inter",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+  --deck-r:26px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1C1B19;--bg-2:#232220;--bg-3:#2B2926;--surface:#26241F;
+    --ink:#F2F0E9;--ink-2:#D6D3CA;--ink-3:#9B978D;--ink-4:#6E6B63;
+    --line:rgba(242,240,233,.10);--line-2:rgba(242,240,233,.17);
+    --accent:#DE9070;--accent-2:#E8AB90;--accent-soft:rgba(222,144,112,.12);--glow:rgba(222,144,112,.15);
+    --good:#7FBF9A;
+    --shadow:0 0 0 1px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.28),0 4px 80px 8px rgba(0,0,0,.2);
+    --shadow-card:0 0 0 1px rgba(255,255,255,.05);
+    --shadow-lift:0 0 0 1px rgba(255,255,255,.07),0 22px 48px -18px rgba(0,0,0,.5);
+    --bar-bg:rgba(28,27,25,.62);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1C1B19;--bg-2:#232220;--bg-3:#2B2926;--surface:#26241F;
+  --ink:#F2F0E9;--ink-2:#D6D3CA;--ink-3:#9B978D;--ink-4:#6E6B63;
+  --line:rgba(242,240,233,.10);--line-2:rgba(242,240,233,.17);
+  --accent:#DE9070;--accent-2:#E8AB90;--accent-soft:rgba(222,144,112,.12);--glow:rgba(222,144,112,.15);
+  --good:#7FBF9A;
+  --shadow:0 0 0 1px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.28),0 4px 80px 8px rgba(0,0,0,.2);
+  --shadow-card:0 0 0 1px rgba(255,255,255,.05);
+  --shadow-lift:0 0 0 1px rgba(255,255,255,.07),0 22px 48px -18px rgba(0,0,0,.5);
+  --bar-bg:rgba(28,27,25,.62);
+}
+
+*{box-sizing:border-box}
+/* clip, never hidden — `hidden` promotes <body> to the scroll container */
+html{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:clip}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+p{margin:0}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:330;text-wrap:balance}
+h1{font-size:clamp(50px,8.4vw,104px);line-height:1.015;letter-spacing:-.028em}
+h2{font-size:clamp(32px,4.4vw,52px);line-height:1.07;letter-spacing:-.02em}
+h3{font-size:23px;line-height:1.26;font-weight:400;letter-spacing:-.01em}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.label{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
+.blob-1{width:54vw;height:54vw;left:-14vw;top:-12vw;background:radial-gradient(circle,var(--glow),transparent 66%)}
+.blob-2{width:44vw;height:44vw;right:-12vw;top:52vh;background:radial-gradient(circle,var(--glow),transparent 66%);opacity:.7}
+.dots{position:absolute;inset:-12% -6%;background-image:radial-gradient(circle at 1px 1px,var(--line-2) 1px,transparent 0);background-size:34px 34px;opacity:.5;will-change:transform}
+.page{position:relative;z-index:1}
+
+.bar{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:60;border-radius:999px;
+  border:1px solid var(--line-2);background:var(--bar-bg);
+  backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);
+  box-shadow:0 1px 2px rgba(20,20,19,.05),0 10px 30px -14px rgba(20,20,19,.22);
+  transition:top .4s cubic-bezier(.22,1,.36,1);max-width:calc(100vw - 24px)}
+.bar-in{display:flex;align-items:center;gap:16px;padding:var(--bar-pad) var(--bar-pad) var(--bar-pad) 22px;--bar-pad:7px;transition:padding .4s cubic-bezier(.22,1,.36,1)}
+.bar.small{top:10px}
+.bar.small .bar-in{--bar-pad:5px;padding-left:18px}
+.logo{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:500;letter-spacing:-.015em;white-space:nowrap;text-decoration:none}
+.glyph{width:20px;height:20px;flex:none;display:block}
+.glyph .ring{transform-origin:50% 50%;animation:spin 34s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.navlink{position:relative;font-size:14.5px;color:var(--ink-2);text-decoration:none;padding:4px 0;white-space:nowrap}
+.navlink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.navlink:hover::after{transform:scaleX(1);transform-origin:left}
+.pill{position:relative;display:inline-flex;align-items:center;gap:9px;overflow:hidden;border-radius:999px;
+  font-size:15px;font-weight:500;font-family:inherit;padding:13px 26px;border:1px solid transparent;
+  cursor:pointer;text-decoration:none;isolation:isolate;background:transparent;color:var(--ink);flex:none}
+.pill span{position:relative;z-index:2;display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
+.pill::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.pill:hover::before{transform:scaleY(1);transform-origin:top}
+.pill .arw{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.pill:hover .arw{transform:translateX(4px)}
+.pill.solid{background:var(--ink);color:var(--bg)}
+.pill.solid::before{background:var(--accent)}
+.pill.ghost{color:var(--ink-2);border-color:var(--line-2)}
+.pill.ghost::before{background:var(--bg-3)}
+.bar .pill{padding:10px 18px;font-size:14px}
+
+.w{display:inline-block;white-space:nowrap}
+.cm{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.09em;margin-bottom:-.09em}
+.ci{display:inline-block;will-change:transform}
+.wm{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.11em;margin-bottom:-.11em}
+.wi{display:inline-block;will-change:transform}
+
+.hero{position:relative;padding:180px 0 120px;text-align:center;will-change:transform}
+.hero h1{margin-bottom:28px;max-width:13ch;margin-left:auto;margin-right:auto}
+.hero .sub{font-size:clamp(19px,2.1vw,23px);color:var(--ink-3);max-width:620px;margin:0 auto;line-height:1.55}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+
+.deck{position:relative;background:var(--bg);border-radius:var(--deck-r) var(--deck-r) 0 0;margin-top:calc(var(--deck-r) * -1);border-top:1px solid var(--line)}
+.deck.tinted{background:var(--bg-2)}
+section{padding:clamp(90px,10vw,140px) 0}
+.sec-head{text-align:center;max-width:700px;margin:0 auto clamp(48px,5.5vw,74px)}
+.sec-head .label{display:block;margin-bottom:20px}
+.sec-head .rule{width:64px;height:1px;background:var(--line-2);margin:0 auto 24px;transform-origin:center;will-change:transform}
+.sec-head p{font-size:18px;color:var(--ink-3);margin-top:20px;line-height:1.62}
+
+/* the lineage */
+.line-rail{display:grid;gap:16px}
+.model{
+  display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:24px;
+  padding:30px 30px 32px;box-shadow:var(--shadow-card);will-change:transform,opacity;
+  transition:box-shadow .5s cubic-bezier(.22,1,.36,1),border-color .5s ease;
+}
+.model:hover{box-shadow:var(--shadow-lift);border-color:var(--line-2)}
+.model .size{font-family:var(--mono);font-size:13px;color:var(--ink-4);letter-spacing:.1em;padding-top:8px;white-space:nowrap}
+.model h3{margin-bottom:8px}
+.model .what{font-size:16px;color:var(--ink-3);max-width:62ch}
+.model .specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.model .specs span{font-family:var(--mono);font-size:12px;color:var(--ink-3);background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
+.model .go{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.state{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.state.open{color:var(--good)}
+.state.closed{color:var(--ink-4)}
+.state.running{color:var(--accent)}
+.model.running{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-soft),var(--shadow-card)}
+
+.evals{width:100%;border-collapse:collapse;font-size:15px;margin-top:20px}
+.evals th{text-align:left;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);padding:0 16px 10px 0;border-bottom:1px solid var(--line-2)}
+.evals td{padding:11px 16px 11px 0;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.evals td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.evals td.win{color:var(--ink);font-weight:600}
+.tablewrap{overflow-x:auto}
+
+.tool{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:34px 32px 36px;box-shadow:var(--shadow-card);will-change:transform,opacity}
+.panel h3{margin-bottom:14px}
+.panel p{color:var(--ink-3);font-size:16px;margin-top:12px}
+.does{display:grid;gap:0;margin-top:22px}
+.does div{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:15.5px}
+.does div:last-child{border-bottom:0}
+.does .k{font-family:var(--mono);font-size:12px;color:var(--ink-4)}
+.tag{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 10px;margin-left:8px}
+
+
+.contact{text-align:center;padding:clamp(100px,12vw,160px) 0}
+.contact h2{margin-bottom:20px}
+.contact p{color:var(--ink-3);font-size:18px;max-width:560px;margin:0 auto 34px}
+.contact-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:36px 0 64px}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--ink-4)}
+
+.cur,.cur-ring{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;opacity:0}
+.cur{width:6px;height:6px;background:var(--accent);margin:-3px 0 0 -3px}
+.cur-ring{width:38px;height:38px;border:1px solid var(--accent);margin:-19px 0 0 -19px}
+@media (pointer:coarse){.cur,.cur-ring{display:none}}
+
+@media (max-width:860px){
+  .tool{grid-template-columns:1fr}
+  .model{grid-template-columns:1fr;gap:14px}
+  .model .go{align-items:flex-start}
+  .model .size{padding-top:0}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .bar .navlink{display:none}
+  .hero{padding-top:140px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-layers" aria-hidden="true">
+  <div class="dots" id="dots"></div>
+  <div class="blob blob-1" id="blob1"></div>
+  <div class="blob blob-2" id="blob2"></div>
+</div>
+
+<div class="cur" id="cur" aria-hidden="true"></div>
+<div class="cur-ring" id="curRing" aria-hidden="true"></div>
+
+<header class="bar" id="bar">
+  <div class="bar-in">
+    <a class="logo" href="#top">
+      <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true">
+        <circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle>
+        <circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle>
+      </svg>
+      Sane Labs
+    </a>
+    <a class="navlink" href="#models">Models</a>
+    <a class="navlink" href="#studio">Studio</a>
+    <a class="pill solid magnetic" href="./index.html"><span>Synth-2<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  </div>
+</header>
+
+<div class="page" id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <h1 class="split-chars">Small models that read before they answer.</h1>
+    <p class="sub anim-up">Sane Labs trains language models from scratch — own architecture, own tokenizer, own training code, not one borrowed weight. Each one is built so its knowledge comes from the text in front of it rather than from its own parameters.</p>
+    <div class="hero-cta anim-up">
+      <a class="pill solid magnetic" href="#models"><span>The models<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="pill ghost magnetic" href="https://github.com/ssane-labs" target="_blank" rel="noopener noreferrer"><span>GitHub</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="deck tinted" id="models">
+  <div class="wrap">
+    <section>
+      <div class="sec-head">
+        <span class="label anim-up">One line, four sizes</span>
+        <div class="rule"></div>
+        <h2 class="split-words">Every model trained from zero</h2>
+        <p class="anim-up">Same thesis at every scale: put the knowledge in the context, not in the weights. Each model is larger than the last, and none of them inherits a single parameter from anywhere else.</p>
+      </div>
+
+      <div class="line-rail">
+        <article class="model">
+          <span class="size">46.7M</span>
+          <div>
+            <h3>Sane-47M</h3>
+            <p class="what">The first one that worked. It knows what it is, holds a short conversation, and — the useful part — reads a supplied <span class="mono">&lt;|context|&gt;</span> and copies the right value out of it, including out of noisy search results with distractors, and says so when the answer is not in the passage.</p>
+            <div class="specs">
+              <span>12 layers · d_model 512</span><span>context 1024</span><span>own BPE, 16k</span>
+              <span>≈4.4B tokens</span><span>2×T4 → TPU v5e-8</span><span>fp16 · 105 MiB</span>
+            </div>
+          </div>
+          <div class="go">
+            <span class="state open">Published</span>
+            <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka/sane-47m" target="_blank" rel="noopener noreferrer"><span>Model card</span></a>
+          </div>
+        </article>
+
+        <article class="model">
+          <span class="size">118.5M</span>
+          <div>
+            <h3>Sane-118M</h3>
+            <p class="what">The same design 2.5× over, sharing the tokenizer with Sane-47M. Six hours on a TPU v5e-8, WSD schedule, and it clears GPT-2 small on two of the three tasks it was measured against — on a quarter of GPT-2's training budget.</p>
+            <div class="specs">
+              <span>15 layers · d_model 768</span><span>context 1024</span><span>≈3.6B tokens</span>
+              <span>TPU v5e-8 · ~6 h</span><span>fp16 · 249 MiB</span>
+            </div>
+            <div class="tablewrap">
+              <table class="evals">
+                <thead><tr><th>Zero-shot, 200 examples</th><th>Sane-118M</th><th>Random</th><th>GPT-2 small</th></tr></thead>
+                <tbody>
+                  <tr><td>HellaSwag · acc_norm</td><td class="n win">36.0</td><td class="n">25.0</td><td class="n">~31</td></tr>
+                  <tr><td>ARC-Easy · acc</td><td class="n win">47.5</td><td class="n">25.0</td><td class="n">~44</td></tr>
+                  <tr><td>LAMBADA · acc</td><td class="n">22.0</td><td class="n">~0</td><td class="n">~33</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="go">
+            <span class="state open">Published</span>
+            <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka/sane-118m" target="_blank" rel="noopener noreferrer"><span>Model card</span></a>
+          </div>
+        </article>
+
+        <article class="model">
+          <span class="size">~500M</span>
+          <div>
+            <h3>Sane-500M</h3>
+            <p class="what">The step between the small models and Synth-2. Trained, kept private, and not released: it exists as the scale check that the recipe survives past a hundred million parameters.</p>
+            <div class="specs"><span>not published</span></div>
+          </div>
+          <div class="go"><span class="state closed">Private</span></div>
+        </article>
+
+        <article class="model running">
+          <span class="size">1.23B</span>
+          <div>
+            <h3>Synth-2</h3>
+            <p class="what">The current work, and the first one that carries the idea in its architecture rather than in its training data: an epistemic head on every layer predicts the model's own error per token, so the answer can show which span to check. It reads a search results page and answers only from it.</p>
+            <div class="specs">
+              <span>24 layers · d_model 768</span><span>~330M active of 1.23B</span><span>12 experts + 1 shared</span>
+              <span>context 8k → 32k</span><span>JAX · TPU v5e-8</span>
+            </div>
+          </div>
+          <div class="go">
+            <span class="state running">In training</span>
+            <a class="pill ghost magnetic" href="./index.html"><span>Live run log</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="deck" id="studio">
+  <div class="wrap">
+    <section>
+      <div class="sec-head">
+        <span class="label anim-up">Not a model</span>
+        <div class="rule"></div>
+        <h2 class="split-words">Sane Studio</h2>
+        <p class="anim-up">A desktop agent for Windows that does the work on your own machine, with your own model keys.</p>
+      </div>
+      <div class="tool">
+        <div class="panel">
+          <h3>What it does while you are busy</h3>
+          <div class="does">
+            <div><span class="k">01</span><span>Edits a project and runs commands in it</span></div>
+            <div><span class="k">02</span><span>Clicks buttons on websites <span class="tag">experiment</span></span></div>
+            <div><span class="k">03</span><span>Answers out loud when called by name <span class="tag">experiment</span></span></div>
+            <div><span class="k">04</span><span>Answers from your own folders</span></div>
+            <div><span class="k">05</span><span>Reachable from a phone, through Telegram</span></div>
+            <div><span class="k">06</span><span>Runs tasks on a schedule</span></div>
+            <div><span class="k">07</span><span>Any model, your own API keys</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>How it ships</h3>
+          <p>The app and its website read one manifest, so a release cannot leave them disagreeing: the installer checks it daily, compares versions and verifies the download against its <span class="mono">sha256</span>.</p>
+          <p>Free to use, with paid tiers for the parts that save hours rather than minutes.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+            <a class="pill solid magnetic" href="https://github.com/ssane-labs/Sane-Studio" target="_blank" rel="noopener noreferrer"><span>Source<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="deck tinted">
+  <div class="wrap">
+    <section class="contact">
+      <h2 class="split-words">Corrections welcome.</h2>
+      <p class="anim-up">Every number on these pages is reproducible, so if one looks wrong, saying so is worth more than a compliment.</p>
+      <div class="contact-row anim-up">
+        <a class="pill solid magnetic" href="mailto:ssanelabs@gmail.com?subject=Sane%20Labs"><span>ssanelabs@gmail.com</span></a>
+        <a class="pill ghost magnetic" href="https://huggingface.co/sekund0chka" target="_blank" rel="noopener noreferrer"><span>Hugging Face</span></a>
+        <a class="pill ghost magnetic" href="https://boosty.to/fabrix.com/donate" target="_blank" rel="noopener noreferrer"><span>Support</span></a>
+      </div>
+    </section>
+    <footer>
+      <div class="wrap foot">
+        <span>Sane Labs · trained from scratch, no borrowed weights</span>
+        <span>Sane-47M and Sane-118M under the Sane Community License 1.0</span>
+      </div>
+    </footer>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!window.gsap||!window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  var lenis=null;
+  if(window.Lenis){
+    lenis=new Lenis({duration:1.15,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},smoothWheel:true});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(time){lenis.raf(time*1000);});
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click',function(e){
+        var t=a.getAttribute('href');if(t==='#')return;
+        var node=document.querySelector(t);
+        if(!node)return;
+        e.preventDefault();
+        if(lenis) lenis.scrollTo(node,{offset:-80});
+        else node.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+    /* smooth scrolling is a nicety, scrolling is not */
+    var strikes=0;
+    window.addEventListener('wheel',function(e){
+      if(!lenis)return;
+      var max=document.documentElement.scrollHeight-window.innerHeight, y0=window.scrollY;
+      if(!((e.deltaY>0&&y0<max-2)||(e.deltaY<0&&y0>2)))return;
+      setTimeout(function(){
+        if(!lenis)return;
+        if(Math.abs(window.scrollY-y0)<1){
+          if(++strikes>=3){lenis.destroy();lenis=null;
+            document.documentElement.classList.remove('lenis','lenis-smooth','lenis-scrolling');}
+        }else strikes=0;
+      },420);
+    },{passive:true});
+  }
+
+  function splitChars(node){
+    var parts=node.textContent.split(/(\s+)/),out=[];
+    node.textContent='';
+    parts.forEach(function(p){
+      if(p==='')return;
+      if(/^\s+$/.test(p)){node.appendChild(document.createTextNode(p));return;}
+      var w=document.createElement('span');w.className='w';
+      p.split('').forEach(function(ch){
+        var m=document.createElement('span');m.className='cm';
+        var i=document.createElement('span');i.className='ci';i.textContent=ch;
+        m.appendChild(i);w.appendChild(m);out.push(i);
+      });
+      node.appendChild(w);
+    });
+    return out;
+  }
+  function splitWords(node){
+    var parts=node.textContent.split(/(\s+)/),out=[];
+    node.textContent='';
+    parts.forEach(function(p){
+      if(p==='')return;
+      if(/^\s+$/.test(p)){node.appendChild(document.createTextNode(p));return;}
+      var m=document.createElement('span');m.className='wm';
+      var i=document.createElement('span');i.className='wi';i.textContent=p;
+      m.appendChild(i);node.appendChild(m);out.push(i);
+    });
+    return out;
+  }
+
+  var heroChars=splitChars(document.querySelector('.hero h1'));
+  var heroBits=document.querySelectorAll('.hero .anim-up');
+  gsap.set(heroChars,{yPercent:112});
+  gsap.set(heroBits,{y:26,opacity:0});
+  gsap.timeline({delay:.15,defaults:{ease:"expo.out"}})
+    .to(heroChars,{yPercent:0,duration:1.25,stagger:{each:.014}})
+    .to(heroBits,{y:0,opacity:1,duration:1.05,stagger:.08},"-=.95");
+
+  gsap.to(".hero",{yPercent:-9,opacity:.2,ease:"none",
+    scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:.6}});
+  gsap.to("#dots",{yPercent:12,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:.8}});
+  gsap.to("#blob1",{yPercent:50,xPercent:10,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:1.1}});
+  gsap.to("#blob2",{yPercent:-44,xPercent:-9,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:1.4}});
+
+  ScrollTrigger.create({start:"top -50",
+    onUpdate:function(self){document.getElementById('bar').classList.toggle('small',self.scroll()>50);},
+    onToggle:function(self){document.getElementById('bar').classList.toggle('small',self.isActive);}});
+
+  gsap.utils.toArray('.deck').forEach(function(d){
+    gsap.fromTo(d,{y:40},{y:0,ease:"none",scrollTrigger:{trigger:d,start:"top bottom",end:"top 62%",scrub:.7}});
+  });
+  document.querySelectorAll('.split-words').forEach(function(h){
+    var words=splitWords(h);
+    gsap.set(words,{yPercent:112});
+    gsap.to(words,{yPercent:0,duration:1.05,ease:"expo.out",stagger:.05,
+      scrollTrigger:{trigger:h,start:"top 88%",toggleActions:"play none none reverse"}});
+  });
+  document.querySelectorAll('.sec-head .rule').forEach(function(r){
+    gsap.fromTo(r,{scaleX:0},{scaleX:1,duration:1.1,ease:"expo.out",
+      scrollTrigger:{trigger:r,start:"top 92%",toggleActions:"play none none reverse"}});
+  });
+  document.querySelectorAll('.anim-up').forEach(function(node){
+    if(node.closest('.hero'))return;
+    gsap.fromTo(node,{y:24,opacity:0},{y:0,opacity:1,duration:.95,ease:"expo.out",
+      scrollTrigger:{trigger:node,start:"top 92%",toggleActions:"play none none reverse"}});
+  });
+  gsap.utils.toArray('.model').forEach(function(m,i){
+    gsap.fromTo(m,{y:52,opacity:0},{y:0,opacity:1,duration:1.05,ease:"expo.out",
+      scrollTrigger:{trigger:m,start:"top 90%",toggleActions:"play none none reverse"}});
+  });
+  gsap.utils.toArray('.panel').forEach(function(p,i){
+    gsap.fromTo(p,{y:50,opacity:0},{y:0,opacity:1,duration:1.05,ease:"expo.out",delay:i*.1,
+      scrollTrigger:{trigger:p,start:"top 88%",toggleActions:"play none none reverse"}});
+  });
+  gsap.utils.toArray('.does div').forEach(function(d,i){
+    gsap.fromTo(d,{x:-14,opacity:0},{x:0,opacity:1,duration:.7,ease:"expo.out",delay:i*.05,
+      scrollTrigger:{trigger:'.does',start:"top 90%",toggleActions:"play none none reverse"}});
+  });
+
+  if(window.matchMedia('(pointer:fine)').matches){
+    var cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+    var cx=gsap.quickTo(cur,"x",{duration:.12,ease:"power3"}),cy=gsap.quickTo(cur,"y",{duration:.12,ease:"power3"}),
+        rx=gsap.quickTo(ring,"x",{duration:.5,ease:"power3"}),ry=gsap.quickTo(ring,"y",{duration:.5,ease:"power3"});
+    var over=0;
+    window.addEventListener('mousemove',function(e){cx(e.clientX);cy(e.clientY);rx(e.clientX);ry(e.clientY);});
+    document.querySelectorAll('a,button,.magnetic,.model').forEach(function(node){
+      node.addEventListener('mouseenter',function(){
+        over++;gsap.to([cur,ring],{opacity:1,duration:.25,overwrite:"auto"});
+        gsap.to(ring,{scale:1.6,duration:.35,overwrite:"auto"});
+      });
+      node.addEventListener('mouseleave',function(){
+        over=Math.max(0,over-1);
+        if(!over){gsap.to([cur,ring],{opacity:0,duration:.25,overwrite:"auto"});gsap.to(ring,{scale:1,duration:.3,overwrite:"auto"});}
+      });
+    });
+    document.addEventListener('mouseleave',function(){over=0;gsap.to([cur,ring],{opacity:0,duration:.25});});
+    document.querySelectorAll('.magnetic').forEach(function(node){
+      var mx=gsap.quickTo(node,"x",{duration:.5,ease:"power3"}),my=gsap.quickTo(node,"y",{duration:.5,ease:"power3"});
+      node.addEventListener('mousemove',function(e){
+        var r=node.getBoundingClientRect();
+        mx((e.clientX-(r.left+r.width/2))*.3);my((e.clientY-(r.top+r.height/2))*.4);
+      });
+      node.addEventListener('mouseleave',function(){mx(0);my(0);});
+    });
+  }
+
+  window.addEventListener('load',function(){ScrollTrigger.refresh();});
+})();
+</script>
+</body>
+</html>
