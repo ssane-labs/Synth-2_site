@@ -140,7 +140,7 @@ h3{font-size:24px;line-height:1.26;font-weight:400;letter-spacing:-.01em}
 
 /* hero */
 .hero{position:relative;padding:172px 0 128px;text-align:center;will-change:transform}
-.status-chip{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line-2);border-radius:999px;padding:8px 18px 8px 14px;font-size:14px;color:var(--ink-2);background:var(--surface);margin-bottom:34px;box-shadow:var(--shadow-card)}
+.status-chip{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line-2);border-radius:999px;padding:8px 18px 8px 14px;font-size:14px;color:var(--ink-2);background:var(--surface);margin-bottom:34px;box-shadow:var(--shadow-card);white-space:nowrap;max-width:100%}
 .status-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;animation:blink 2.6s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .status-chip a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
@@ -375,6 +375,10 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
   h3{font-size:21px}
   .hero{padding:104px 0 76px}
   .hero .sub{font-size:17.5px}
+  /* the chip stays one line: the trailing link is already in the bar as Run log */
+  .status-chip{font-size:12.5px;gap:8px;padding:6px 13px 6px 11px;margin-bottom:26px}
+  .status-chip .dot{width:6px;height:6px}
+  .chip-tail{display:none}
   section{padding:clamp(66px,14vw,96px) 0}
   .sec-head{margin-bottom:38px}
   .sec-head p{font-size:17px}
@@ -457,7 +461,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
 
 <section class="hero" id="hero">
   <div class="wrap-wide" id="heroInner">
-    <span class="status-chip anim-up"><span class="dot"></span><span id="chipText">Pretraining · reading the run log…</span> · <a href="#status">see the log</a></span>
+    <span class="status-chip anim-up"><span class="dot"></span><span id="chipText">Pretraining · reading the run log…</span><span class="chip-tail"> · <a href="#status">see the log</a></span></span>
     <h1 class="split-chars">The model that tells you which words to check.</h1>
     <p class="sub anim-up">Synth-2 reads a search results page, answers only from it, and underlines the exact span it isn't sure about.</p>
 
@@ -960,7 +964,11 @@ Canberra was laid out in 1913 [2].</pre></div>
     el('mTrend').textContent=trend==null?'—':(trend>0?'+':'')+fmt(trend,4);
     el('mTrendSub').textContent=tsub;
 
-    el('chipText').textContent='Pretraining · step '+comma(last.step)+' of '+comma(total);
+    /* a phone gets the short form so the chip never wraps inside its own pill */
+    var tight=window.matchMedia('(max-width:620px)').matches;
+    el('chipText').textContent=tight
+      ? 'Step '+comma(last.step)+' / '+comma(total)
+      : 'Pretraining · step '+comma(last.step)+' of '+comma(total);
     el('footStamp').textContent='Run log · last measurement '+(last.recordedOn||('step '+comma(last.step)));
 
     drawChart(sorted,best,last);
