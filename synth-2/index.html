@@ -6,9 +6,22 @@
 <meta name="description" content="Synth-2 is a 1.23B-parameter language model trained from scratch that reads a search results page, answers only from it, and marks the exact span it is not sure about.">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Sane Labs">
+<meta property="og:locale" content="en">
+<meta property="og:url" content="https://sanelabs.org/synth-2/">
 <meta property="og:title" content="Synth-2">
 <meta property="og:description" content="Synth-2 is a 1.23B-parameter language model trained from scratch that reads a search results page, answers only from it, and marks the exact span it is not sure about.">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://sanelabs.org/synth-2/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Synth-2 — 1.23B total, ~330M active per token, 12 + 1 experts, stage B.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Synth-2">
+<meta name="twitter:description" content="Reads a search results page, answers only from it, and underlines the exact span it isn’t sure about.">
+<meta name="twitter:image" content="https://sanelabs.org/synth-2/og.png">
+<link rel="canonical" href="https://sanelabs.org/synth-2/">
+<meta name="theme-color" content="#EFECE3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23141413' stroke-width='2.4' stroke-dasharray='5 4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C46849'/%3E%3C/svg%3E">
 <title>Synth-2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -429,7 +442,23 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"WebPage","@id":"https://sanelabs.org/synth-2/#page","url":"https://sanelabs.org/synth-2/","name":"Synth-2",
+  "description":"Synth-2 is a 1.23B-parameter language model trained from scratch that reads a search results page, answers only from it, and marks the exact span it is not sure about.",
+  "isPartOf":{"@id":"https://sanelabs.org/#site"},"about":{"@id":"https://sanelabs.org/synth-2/#model"},"inLanguage":"en"},
+ {"@type":"CreativeWork","@id":"https://sanelabs.org/synth-2/#model","name":"Synth-2",
+  "creator":{"@type":"Organization","name":"Sane Labs","url":"https://sanelabs.org/"},
+  "creativeWorkStatus":"In training",
+  "description":"A 1.23B-parameter mixture-of-experts language model, about 330M parameters active per token, trained from scratch with a per-token uncertainty head on every layer.",
+  "keywords":"language model, from scratch, mixture of experts, grounded question answering, calibration, uncertainty, TPU, JAX"},
+ {"@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Sane Labs","item":"https://sanelabs.org/"},
+  {"@type":"ListItem","position":2,"name":"Synth-2","item":"https://sanelabs.org/synth-2/"}]}
+]}
+</script>
 </head>
+
 <body>
 <div class="bg-layers" aria-hidden="true">
   <div class="bg-tint" id="tint"></div>
@@ -452,6 +481,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 72px}
     </span>
     <a class="navlink" href="#method">Method</a>
     <a class="navlink keep" href="#status">Run log</a>
+    <a class="navlink" href="../notes/">Notes</a>
     <a class="navlink" href="../">Sane Labs</a>
     <a class="pill solid magnetic" href="#support"><span>Support<svg class="arw" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
@@ -1451,5 +1481,6 @@ Canberra was laid out in 1913 [2].</pre></div>
   }
 })();
 </script>
+<script src="/beacon.js" defer></script>
 </body>
 </html>

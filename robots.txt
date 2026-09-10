@@ -1,0 +1,5 @@
+# sanelabs.org — two pages, nothing private, everything crawlable.
+User-agent: *
+Allow: /
+
+Sitemap: https://sanelabs.org/sitemap.xml

@@ -6,9 +6,23 @@
 <title>Sane Labs</title>
 <meta name="description" content="Sane Labs trains small language models from scratch — no borrowed weights — built so their knowledge comes from the text in front of them rather than from their own parameters.">
 <meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://sanelabs.org/">
+<meta name="theme-color" content="#EFECE3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Sane Labs">
+<meta property="og:locale" content="en">
+<meta property="og:url" content="https://sanelabs.org/">
 <meta property="og:title" content="Sane Labs">
 <meta property="og:description" content="Small language models trained from scratch. A register of the work.">
+<meta property="og:image" content="https://sanelabs.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sane Labs — four models trained from scratch, none of them inheriting a single parameter from anywhere else.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sane Labs">
+<meta name="twitter:description" content="Small language models trained from scratch. A register of the work.">
+<meta name="twitter:image" content="https://sanelabs.org/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23141413' stroke-width='2.4' stroke-dasharray='5 4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C46849'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -204,7 +218,17 @@ section{padding:88px 0 0}
 @media (pointer:coarse){.cur,.cur-ring{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://sanelabs.org/#org","name":"Sane Labs","url":"https://sanelabs.org/",
+  "email":"ssanelabs@gmail.com","logo":"https://sanelabs.org/og.png",
+  "description":"Sane Labs trains small language models from scratch, with no borrowed weights, so that their knowledge comes from the text in front of them rather than from their own parameters.",
+  "sameAs":["https://github.com/ssane-labs","https://huggingface.co/sekund0chka"]},
+ {"@type":"WebSite","@id":"https://sanelabs.org/#site","url":"https://sanelabs.org/","name":"Sane Labs","publisher":{"@id":"https://sanelabs.org/#org"},"inLanguage":"en"}
+]}
+</script>
 </head>
+
 <body>
 
 <div class="glow" id="glow" aria-hidden="true"></div>
@@ -230,6 +254,7 @@ section{padding:88px 0 0}
       <a href="#models"><i>01</i><span>Models</span></a>
       <a href="#studio"><i>02</i><span>Studio</span></a>
       <a href="#contact"><i>03</i><span>Contact</span></a>
+      <a href="./notes/"><i>04</i><span>Notes</span></a>
       <a href="./synth-2/"><i>→</i><span>Synth-2 run log</span></a>
     </nav>
     <div class="progress" aria-hidden="true"><i id="prog"></i></div>
@@ -530,5 +555,6 @@ section{padding:88px 0 0}
   }
 })();
 </script>
+<script src="/beacon.js" defer></script>
 </body>
 </html>

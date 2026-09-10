@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes · Sane Labs</title>
+<meta name="description" content="Working notes from the Synth-2 pretraining run: what was measured, what it changed, and which explanations it ruled out.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://sanelabs.org/notes/">
+<meta name="theme-color" content="#EFECE3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sane Labs">
+<meta property="og:locale" content="en">
+<meta property="og:url" content="https://sanelabs.org/notes/">
+<meta property="og:title" content="Notes · Sane Labs">
+<meta property="og:description" content="Working notes from the Synth-2 pretraining run: what was measured, what it changed, and which explanations it ruled out.">
+<meta property="og:image" content="https://sanelabs.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Notes · Sane Labs">
+<meta name="twitter:description" content="Working notes from the Synth-2 pretraining run.">
+<meta name="twitter:image" content="https://sanelabs.org/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23141413' stroke-width='2.4' stroke-dasharray='5 4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C46849'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+
+/* The lab register. Same family as the Synth-2 page — one accent, the same three
+   faces — but a different object: a left-ruled index, not a centred landing.
+   Deeper paper, no cards, no floating bar, numbers in the margin. */
+:root{
+  --paper:#EFECE3;--paper-2:#E7E3D8;--ink:#141413;--ink-2:#3A3A37;--ink-3:#6F6E68;--ink-4:#9C9A92;
+  --rule:rgba(20,20,19,.13);--rule-soft:rgba(20,20,19,.07);
+  --accent:#C46849;--accent-soft:rgba(196,104,73,.10);--glow:rgba(196,104,73,.13);
+  --good:#3C6B4F;
+  --serif:"Fraunces","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Inter",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#191816;--paper-2:#211F1C;--ink:#F0EDE4;--ink-2:#CFCBC1;--ink-3:#928E85;--ink-4:#66635C;
+    --rule:rgba(240,237,228,.14);--rule-soft:rgba(240,237,228,.07);
+    --accent:#DE9070;--accent-soft:rgba(222,144,112,.13);--glow:rgba(222,144,112,.12);
+    --good:#7FBF9A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#191816;--paper-2:#211F1C;--ink:#F0EDE4;--ink-2:#CFCBC1;--ink-3:#928E85;--ink-4:#66635C;
+  --rule:rgba(240,237,228,.14);--rule-soft:rgba(240,237,228,.07);
+  --accent:#DE9070;--accent-soft:rgba(222,144,112,.13);--glow:rgba(222,144,112,.12);
+  --good:#7FBF9A;
+}
+
+*{box-sizing:border-box}
+body{margin:0}   /* the UA default 8px pushes every full-width block off a phone screen */
+html{overflow-x:clip}          /* never `hidden` — it promotes <body> to the scroller */
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+p{margin:0}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:400}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.glow{position:fixed;width:58vw;height:58vw;right:-18vw;top:-14vw;border-radius:50%;
+  background:radial-gradient(circle,var(--glow),transparent 66%);filter:blur(80px);
+  pointer-events:none;z-index:0;will-change:transform}
+
+/* ---------- the shell: fixed rail + a single column ---------- */
+.shell{position:relative;z-index:1;display:grid;grid-template-columns:300px 1fr;max-width:1360px;margin:0 auto;gap:0}
+.rail{
+  position:sticky;top:0;height:100vh;padding:54px 40px 44px 40px;
+  border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:34px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:17px;font-weight:500;letter-spacing:-.01em}
+.glyph{width:20px;height:20px;flex:none}
+.glyph .ring{transform-origin:50% 50%;animation:spin 34s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rail .said{font-size:14.5px;color:var(--ink-3);line-height:1.6;max-width:30ch}
+.rail nav{display:grid;gap:0;margin-top:auto}
+.rail nav a{
+  display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:baseline;
+  padding:11px 0;border-top:1px solid var(--rule-soft);text-decoration:none;
+  font-size:14.5px;color:var(--ink-2);transition:color .3s ease;
+}
+.rail nav a:last-of-type{border-bottom:1px solid var(--rule-soft)}
+.rail nav a i{font-family:var(--mono);font-style:normal;font-size:11.5px;color:var(--ink-4);transition:color .3s ease}
+.rail nav a:hover,.rail nav a:hover i{color:var(--accent)}
+.rail .foot{font-family:var(--mono);font-size:11px;color:var(--ink-4);line-height:1.7;letter-spacing:.02em}
+.progress{height:2px;background:var(--rule-soft);position:relative;overflow:hidden}
+.progress i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;display:block}
+
+.col{padding:0 clamp(28px,5vw,86px) 0}
+.masthead{padding:120px 0 76px;border-bottom:1px solid var(--rule)}
+.masthead h1{
+  font-family:var(--serif);font-weight:330;font-size:clamp(46px,6.6vw,88px);
+  line-height:1.02;letter-spacing:-.03em;max-width:15ch;
+}
+.masthead .lede{margin-top:30px;font-size:clamp(17px,1.5vw,20px);color:var(--ink-3);max-width:58ch;line-height:1.6}
+.masthead .facts{display:flex;flex-wrap:wrap;gap:0;margin-top:44px}
+.masthead .facts div{padding-right:34px;margin-right:34px;border-right:1px solid var(--rule-soft)}
+.masthead .facts div:last-child{border-right:0;margin-right:0;padding-right:0}
+.masthead .facts dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4)}
+.masthead .facts dd{margin:6px 0 0;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
+
+section{padding:88px 0 0}
+.sec-mark{display:flex;align-items:baseline;gap:16px;margin-bottom:44px}
+.sec-mark i{font-family:var(--mono);font-style:normal;font-size:11.5px;color:var(--accent);letter-spacing:.14em}
+.sec-mark h2{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.sec-mark .bar{flex:1;height:1px;background:var(--rule);transform-origin:left;will-change:transform}
+.sec-note{font-size:17px;color:var(--ink-3);max-width:62ch;margin:-24px 0 46px;line-height:1.62}
+
+/* ---------- the register ---------- */
+.entry{
+  display:grid;grid-template-columns:112px 1fr;gap:34px;
+  padding:38px 0;border-top:1px solid var(--rule);align-items:start;
+  will-change:clip-path,opacity;
+}
+.entry:last-child{border-bottom:1px solid var(--rule)}
+.entry .count{font-family:var(--mono);font-variant-numeric:tabular-nums;line-height:1}
+.entry .count b{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}
+.entry .count span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);margin-top:7px}
+.entry-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.entry-head h3{font-family:var(--serif);font-weight:330;font-size:30px;letter-spacing:-.02em}
+.state{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase}
+.state.open{color:var(--good)}
+.state.closed{color:var(--ink-4)}
+.state.running{color:var(--accent)}
+.entry p{font-size:16px;color:var(--ink-3);max-width:68ch}
+.spec{display:flex;flex-wrap:wrap;gap:0;margin-top:20px}
+.spec div{padding-right:22px;margin-right:22px;border-right:1px solid var(--rule-soft);margin-bottom:10px}
+.spec div:last-child{border-right:0}
+.spec dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4)}
+.spec dd{margin:4px 0 0;font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.entry .go{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+
+.evals{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:24px;max-width:640px}
+.evals th{text-align:left;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-4);padding:0 18px 9px 0;border-bottom:1px solid var(--rule)}
+.evals td{padding:10px 18px 10px 0;border-bottom:1px solid var(--rule-soft);color:var(--ink-3)}
+.evals td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.evals td.win{color:var(--ink);font-weight:600}
+.tablewrap{overflow-x:auto}
+
+.link{
+  display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;
+  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--rule);
+  padding-bottom:3px;transition:border-color .3s ease,color .3s ease;
+}
+.link:hover{color:var(--accent);border-color:var(--accent)}
+.link .arw{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.link:hover .arw{transform:translate(3px,-3px)}
+
+.note{
+  border-left:2px solid var(--accent);padding:4px 0 4px 20px;margin-top:24px;
+  font-size:15px;color:var(--ink-3);max-width:62ch;
+}
+
+.contact-lines{display:grid;gap:0;max-width:640px}
+.contact-lines a{
+  display:grid;grid-template-columns:118px 1fr auto;gap:18px;align-items:baseline;
+  padding:18px 0;border-top:1px solid var(--rule);text-decoration:none;color:inherit;
+}
+.contact-lines a:last-child{border-bottom:1px solid var(--rule)}
+.contact-lines .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-4)}
+.contact-lines .v{font-size:16px}
+.contact-lines .arw{color:var(--ink-4);transition:transform .35s cubic-bezier(.22,1,.36,1),color .3s ease}
+.contact-lines a:hover .v{color:var(--accent)}
+.contact-lines a:hover .arw{transform:translate(3px,-3px);color:var(--accent)}
+
+.tail{padding:70px 0 90px;font-family:var(--mono);font-size:11.5px;color:var(--ink-4);line-height:1.8;letter-spacing:.02em}
+
+/* mobile: the rail becomes a plain header */
+.topbar{display:none}
+@media (max-width:980px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{display:none}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    position:sticky;top:0;z-index:40;padding:16px 24px;
+    background:color-mix(in srgb,var(--paper) 86%,transparent);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--rule);
+  }
+  .col{padding:0 24px}
+  .masthead{padding-top:60px}
+  .entry{grid-template-columns:minmax(0,1fr);gap:16px;padding:30px 0}
+  .entry .count{display:flex;align-items:baseline;gap:12px}
+  .entry .count span{margin-top:0}
+  .entry .count b{font-size:22px}
+  .entry-head h3{font-size:25px}
+  .entry p{font-size:15.5px}
+  .masthead h1{font-size:clamp(34px,9.4vw,46px)}
+  .masthead .lede{font-size:16.5px;margin-top:22px}
+  .masthead .facts{margin-top:32px}
+  .masthead .facts div{padding-right:18px;margin-right:18px;margin-bottom:12px}
+  section{padding:64px 0 0}
+  .sec-mark{margin-bottom:32px}
+  .sec-note{font-size:16px;margin-bottom:34px}
+  .spec div{padding-right:16px;margin-right:16px}
+  .contact-lines a{grid-template-columns:88px 1fr auto;gap:12px}
+  .contact-lines .k{font-size:9.5px}
+  .contact-lines .v{font-size:15px;word-break:break-word}
+  .evals{font-size:13.5px}
+  .tail{padding:52px 0 68px}
+}
+/* Grid items keep their content's width unless told otherwise, which made the
+   column wider than the phone screen and clipped every row inside it. */
+.shell>*,.entry>*{min-width:0}
+.tablewrap{min-width:0}
+
+.cur,.cur-ring{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;opacity:0}
+.cur{width:6px;height:6px;background:var(--accent);margin:-3px 0 0 -3px}
+.cur-ring{width:36px;height:36px;border:1px solid var(--accent);margin:-18px 0 0 -18px}
+@media (pointer:coarse){.cur,.cur-ring{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+/* ---------- the notes ---------- */
+.lognote{display:grid;grid-template-columns:112px 1fr;gap:34px;padding:46px 0;
+  border-top:1px solid var(--rule);align-items:start}
+.lognote:last-of-type{border-bottom:1px solid var(--rule)}
+.lognote>*{min-width:0}
+.lognote .when{font-family:var(--mono);font-size:12.5px;color:var(--ink-4);line-height:1.5;
+  font-variant-numeric:tabular-nums}
+.lognote .when b{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;margin-bottom:9px}
+.lognote h3{font-family:var(--serif);font-size:30px;font-weight:330;letter-spacing:-.02em;
+  line-height:1.16;margin-bottom:18px;max-width:28ch}
+.lognote p{font-size:16.5px;color:var(--ink-3);max-width:70ch;margin-bottom:15px}
+.lognote p:last-child{margin-bottom:0}
+.lognote code{font-family:var(--mono);font-size:.9em;background:var(--accent-soft);
+  padding:1px 5px;border-radius:3px;color:var(--ink-2)}
+.lognote .changed{border-left:2px solid var(--accent);padding-left:17px;color:var(--ink-2);
+  margin-top:24px;font-size:16px}
+.lognote .evals{margin-top:22px;margin-bottom:6px}
+.lognote .evals td.n{color:var(--ink-2)}
+.lognote .evals tr.flat td{color:var(--ink);font-weight:600}
+.notes-head{padding:120px 0 60px;border-bottom:1px solid var(--rule)}
+.tail-note{padding:54px 0 90px;font-size:15.5px;color:var(--ink-4);max-width:64ch}
+@media (max-width:980px){
+  .lognote{grid-template-columns:minmax(0,1fr);gap:14px;padding:34px 0}
+  .lognote .when{display:flex;align-items:baseline;gap:10px}
+  .lognote .when b{margin-bottom:0}
+  .lognote h3{font-size:24px}
+  .lognote p{font-size:15.5px}
+  .notes-head{padding-top:60px}
+}
+
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","@id":"https://sanelabs.org/notes/#blog",
+ "name":"Notes · Sane Labs","url":"https://sanelabs.org/notes/",
+ "description":"Working notes from the Synth-2 pretraining run.",
+ "publisher":{"@type":"Organization","name":"Sane Labs","url":"https://sanelabs.org/"},
+ "inLanguage":"en"}
+</script>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+
+<div class="topbar">
+  <a class="brand" href="../">
+    <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true"><circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle><circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle></svg>
+    Sane Labs
+  </a>
+  <a class="link" href="../synth-2/"><span>Synth-2</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+
+<div class="shell" id="top">
+  <aside class="rail">
+    <a class="brand" href="../">
+      <svg class="glyph" viewBox="0 0 22 22" aria-hidden="true"><circle class="ring" cx="11" cy="11" r="9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3.4 2.8"></circle><circle cx="11" cy="11" r="3.4" fill="var(--accent)"></circle></svg>
+      Sane Labs
+    </a>
+    <p class="said">What was measured this week, and what it changed. Written down whether or
+    not it flattered the plan.</p>
+    <nav>
+      <a href="../"><i>←</i><span>The lab</span></a>
+      <a href="../synth-2/"><i>→</i><span>Synth-2</span></a>
+      <a href="../synth-2/#status"><i>→</i><span>Live run log</span></a>
+    </nav>
+    <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+    <div class="foot">Every number here<br>came from a run that<br>can be repeated.</div>
+  </aside>
+
+  <main class="col">
+    <header class="notes-head">
+      <h1 style="font-family:var(--serif);font-weight:330;font-size:clamp(46px,6.6vw,84px);line-height:1.03;letter-spacing:-.03em;max-width:14ch">Notes from the run.</h1>
+      <p class="lede" style="margin-top:28px;font-size:clamp(17px,1.5vw,20px);color:var(--ink-3);max-width:60ch;line-height:1.6">Synth-2 is in pretraining, which means most weeks produce a measurement rather than a release. These are the measurements that changed what happened next — including the ones that killed a favourite explanation.</p>
+    </header>
+
+    <section id="notes" style="padding-top:56px">
+      <div class="sec-mark"><i>—</i><h2>Working notes</h2><span class="bar"></span></div>
+
+<article class="lognote">
+  <div class="when"><b>Note 04</b>10 Sep 2026</div>
+  <div>
+    <h3>The site spent a day in quirks mode</h3>
+    <p>Not a training note, but it cost a day, so it is written down. This page and the two
+    beside it were drafted inside a preview that supplies its own document wrapper. Published
+    to a plain host, the wrapper was gone and so was the doctype — and a document with no
+    doctype is in quirks mode, where <code>document.scrollingElement</code> is
+    <code>&lt;body&gt;</code> rather than <code>&lt;html&gt;</code>. The smooth-scroll library
+    went on writing to <code>documentElement.scrollTop</code>, which in that mode scrolls
+    nothing at all. The page rendered perfectly and would not move.</p>
+    <p>The second half of the same afternoon: <code>body{overflow-x:hidden}</code> promotes
+    <code>&lt;body&gt;</code> to the scroll container by itself, with the same consequence.
+    <code>overflow-x:clip</code> trims the overflow without creating a scroller.</p>
+    <p class="changed">Both pages now start with a doctype and clip rather than hide. If a
+    page renders and refuses to scroll, check which element is the scroller before checking
+    anything else.</p>
+  </div>
+</article>
+
+<article class="lognote">
+  <div class="when"><b>Note 03</b>08 Sep 2026</div>
+  <div>
+    <h3>The router was counting its load after the drop</h3>
+    <p>Routed experts hold 1104M of Synth-2's 1.23B parameters. They were producing about
+    22% of the feed-forward output — a quarter of the model doing the work of a fifth of a
+    layer. The first suspicion was the router's softmax. It was wrong.</p>
+    <p>Expert load was being tallied <em>after</em> tokens had already been dropped for
+    capacity. An expert that was oversubscribed therefore looked perfectly healthy in the
+    statistics: everything above its capacity had vanished before the count. The balancing
+    bias, which exists precisely to move work away from an overloaded expert, saw nothing to
+    correct and never fired. The imbalance was self-concealing.</p>
+    <p>The fix is one line of accounting — count by demand, before capacity is applied — and
+    the expert share now prints itself in every log line rather than needing a special run to
+    measure.</p>
+    <p class="changed">The next session confirms or refutes this for free. A metric that is
+    computed downstream of a lossy step is not measuring what its name says.</p>
+  </div>
+</article>
+
+<article class="lognote">
+  <div class="when"><b>Note 02</b>07 Sep 2026</div>
+  <div>
+    <h3>A lower learning rate buys a step, not a slope</h3>
+    <p>Held-out loss over steps 37,500–82,000, in three regimes. The middle row is what a
+    learning-rate drop looks like while it is still paying out; the bottom row is the same
+    drop a few thousand steps later.</p>
+    <div class="tablewrap">
+    <table class="evals">
+      <thead><tr><th>Regime</th><th>Steps measured</th><th>Held-out loss per 1,000 steps</th></tr></thead>
+      <tbody>
+        <tr><td>Previous learning rate</td><td class="n">12,450</td><td class="n">−0.0077</td></tr>
+        <tr><td>LR ÷ 3, first thousands</td><td class="n">3,550</td><td class="n">−0.0602</td></tr>
+        <tr class="flat"><td>LR ÷ 3, thereafter</td><td class="n">16,000</td><td class="n">+0.0018</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Seventeen samples across the last session: least-squares slope +0.00178 per thousand
+    steps, residual noise 0.017, t = 2.08. There is no descent left in it. Lowering the rate
+    moves the level at which the loss settles and does not restore a slope — which means a
+    third cut would buy a third step down and then flatten again.</p>
+    <p class="changed">The learning-rate probe has been retired. It measures the step, not
+    the slope, so it will answer <em>lower it</em> every time it is asked. Two explanations
+    survive: the sparse branch running at a fraction of its size (see note 03), and gradient
+    noise at a 65K-token batch under an optimiser whose step length barely depends on the
+    gradient's magnitude.</p>
+  </div>
+</article>
+
+<article class="lognote">
+  <div class="when"><b>Note 01</b>07 Sep 2026</div>
+  <div>
+    <h3>Model-flops utilisation is 5.9%, and the obvious suspects are cleared</h3>
+    <p><b>Attention, cleared</b> by two measurements. Blocks of 256 beat all three
+    alternatives that were tried, and switching the blocking off entirely makes the step 7.3%
+    slower — so the usual fix reached for at this symptom, splash attention, would win
+    nothing here.</p>
+    <p><b>Expert capacity, cleared.</b> Raising it recovers about 14% of dropped tokens and
+    costs roughly 60% more in the mixture-of-experts layer. Not a trade worth making at this
+    size.</p>
+    <p>One candidate is left: the Newton–Schulz iteration inside the optimiser, which runs
+    orthogonalisation on every update. The sweep that settles it is staged and takes about
+    half an hour of TPU time.</p>
+    <p class="changed">Three measurements, three suspects removed, no code changed. Most of
+    the value of a profiling session is the branches it lets you stop thinking about.</p>
+  </div>
+</article>
+
+      <p class="tail-note">Nothing here is a result: the run is a third of the way through a
+      thirteen-billion-token budget and no acceptance criterion has been measured yet. The
+      live state of the run is on the <a href="../synth-2/#status" style="color:var(--accent)">Synth-2 page</a>,
+      read from the log rather than typed in. If a number here looks wrong, saying so is worth
+      more than a compliment — <a href="mailto:ssanelabs@gmail.com?subject=Sane%20Labs%20notes" style="color:var(--accent)">ssanelabs@gmail.com</a>.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+/* Two small things, no libraries: the rail's progress bar, and a reveal that
+   degrades to "everything is visible" wherever IntersectionObserver isn't. */
+(function(){
+  var prog=document.getElementById('prog');
+  if(prog){
+    var tick=function(){
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      prog.style.transform='scaleX('+(h>0?Math.min(1,window.scrollY/h):0)+')';
+    };
+    addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);tick();
+  }
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.style.transition='opacity .6s ease,transform .6s ease';
+      e.target.style.opacity=1;e.target.style.transform='none';
+      io.unobserve(e.target);
+    });
+  },{rootMargin:'0px 0px -8% 0px'});
+  var all=document.querySelectorAll('.lognote');
+  all.forEach(function(n){
+    n.style.opacity=.001;n.style.transform='translateY(14px)';io.observe(n);
+  });
+  /* A reveal that can hide text must have a floor under it: whatever the
+     observer does or fails to do, everything is on screen a moment later. */
+  setTimeout(function(){
+    all.forEach(function(n){n.style.opacity=1;n.style.transform='none';});
+  },1800);
+})();
+</script>
+<script src="/beacon.js" defer></script>
+</body>
+</html>
