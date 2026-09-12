@@ -1,0 +1,484 @@
+[
+ {
+  "n": "15",
+  "id": "prompting",
+  "title": "Prompting & agents",
+  "note": "The cheapest lever, and the one to exhaust before you fine-tune anything.",
+  "items": [
+   {
+    "t": "Prompt engineering overview",
+    "by": "Anthropic",
+    "u": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+    "k": "docs",
+    "m": "official · specific techniques, each with worked examples"
+   },
+   {
+    "t": "Prompt Engineering Interactive Tutorial",
+    "by": "Anthropic",
+    "u": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+    "k": "course",
+    "m": "free · nine chapters with exercises you actually run"
+   },
+   {
+    "t": "Anthropic Cookbook",
+    "by": "Anthropic",
+    "u": "https://github.com/anthropics/claude-cookbooks",
+    "k": "notebook",
+    "m": "classification, RAG, tool use, evaluation — as runnable notebooks"
+   },
+   {
+    "t": "Building effective agents",
+    "by": "Anthropic",
+    "u": "https://www.anthropic.com/engineering/building-effective-agents",
+    "k": "article",
+    "m": "the essay that cut through most agent-framework hype"
+   },
+   {
+    "t": "OpenAI Cookbook",
+    "by": "OpenAI",
+    "u": "https://developers.openai.com/cookbook",
+    "k": "notebook",
+    "m": "MIT · a large, maintained recipe collection"
+   },
+   {
+    "t": "Prompt Engineering Guide",
+    "by": "DAIR.AI",
+    "u": "https://www.promptingguide.ai/",
+    "k": "course",
+    "m": "free · MIT licence · techniques with the papers they came from"
+   },
+   {
+    "t": "AI Agents Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/agents-course",
+    "k": "course",
+    "m": "free · from first principles to a deployed agent, with a certificate"
+   },
+   {
+    "t": "smolagents",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/smolagents/index",
+    "k": "docs",
+    "m": "Apache-2.0 · agents in about a thousand lines you can read"
+   },
+   {
+    "t": "Model Context Protocol",
+    "by": "MCP",
+    "u": "https://modelcontextprotocol.io/",
+    "k": "docs",
+    "m": "the open standard for giving a model tools and data"
+   },
+   {
+    "t": "Chain-of-Thought Prompting",
+    "by": "Wei et al.",
+    "u": "https://arxiv.org/abs/2201.11903",
+    "k": "paper",
+    "m": "the prompt change that unlocked reasoning behaviour"
+   },
+   {
+    "t": "ReAct: Synergizing Reasoning and Acting",
+    "by": "Yao et al.",
+    "u": "https://arxiv.org/abs/2210.03629",
+    "k": "paper",
+    "m": "the loop nearly every agent framework re-implements"
+   },
+   {
+    "t": "Effective context engineering for AI agents",
+    "by": "Anthropic",
+    "u": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "k": "article",
+    "m": "what to put in the window, and what to leave out"
+   }
+  ]
+ },
+ {
+  "n": "16",
+  "id": "multimodal",
+  "title": "Vision, audio & diffusion",
+  "note": "Everything that is not text: image generation, vision-language models, speech.",
+  "items": [
+   {
+    "t": "Diffusion Models Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/diffusion-course",
+    "k": "course",
+    "m": "free · Apache-2.0 · theory and Diffusers, four units"
+   },
+   {
+    "t": "Computer Vision Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/computer-vision-course",
+    "k": "course",
+    "m": "free · community-written, from convolutions to ViTs"
+   },
+   {
+    "t": "Audio Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/audio-course",
+    "k": "course",
+    "m": "free · ASR, TTS and audio classification, hands-on"
+   },
+   {
+    "t": "Deep Learning Foundations to Stable Diffusion",
+    "by": "fast.ai",
+    "u": "https://course.fast.ai/Lessons/part2.html",
+    "k": "course",
+    "m": "free · 30 hours · rebuilds Stable Diffusion from the ground up"
+   },
+   {
+    "t": "What are Diffusion Models?",
+    "by": "Lilian Weng",
+    "u": "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/",
+    "k": "article",
+    "m": "the maths, derived carefully, in one post"
+   },
+   {
+    "t": "The Illustrated Stable Diffusion",
+    "by": "Jay Alammar",
+    "u": "https://jalammar.github.io/illustrated-stable-diffusion/",
+    "k": "article",
+    "m": "the components and how they fit together"
+   },
+   {
+    "t": "Diffusers documentation",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/diffusers/index",
+    "k": "docs",
+    "m": "Apache-2.0 · including LoRA and DreamBooth fine-tuning"
+   },
+   {
+    "t": "Denoising Diffusion Probabilistic Models",
+    "by": "Ho, Jain & Abbeel",
+    "u": "https://arxiv.org/abs/2006.11239",
+    "k": "paper",
+    "m": "the 2020 paper that started the current wave"
+   },
+   {
+    "t": "Learning Transferable Visual Models (CLIP)",
+    "by": "Radford et al.",
+    "u": "https://arxiv.org/abs/2103.00020",
+    "k": "paper",
+    "m": "the joint image-text space nearly everything builds on"
+   },
+   {
+    "t": "An Image is Worth 16x16 Words (ViT)",
+    "by": "Dosovitskiy et al.",
+    "u": "https://arxiv.org/abs/2010.11929",
+    "k": "paper",
+    "m": "transformers taking over vision"
+   },
+   {
+    "t": "Whisper",
+    "by": "OpenAI",
+    "u": "https://github.com/openai/whisper",
+    "k": "code",
+    "m": "MIT · weights and code for speech recognition, fine-tunable"
+   },
+   {
+    "t": "Vision Language Models Explained",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/vlms",
+    "k": "article",
+    "m": "how VLMs are built, trained and evaluated"
+   }
+  ]
+ },
+ {
+  "n": "17",
+  "id": "interp",
+  "title": "Interpretability & safety",
+  "note": "What is actually happening inside the weights, and what to do about the parts you would rather were not.",
+  "items": [
+   {
+    "t": "Transformer Circuits Thread",
+    "by": "Anthropic",
+    "u": "https://transformer-circuits.pub/",
+    "k": "reference",
+    "m": "free · the central body of mechanistic interpretability work"
+   },
+   {
+    "t": "A Mathematical Framework for Transformer Circuits",
+    "by": "Elhage et al.",
+    "u": "https://transformer-circuits.pub/2021/framework/index.html",
+    "k": "paper",
+    "m": "the paper the rest of the field cites"
+   },
+   {
+    "t": "Toy Models of Superposition",
+    "by": "Elhage et al.",
+    "u": "https://transformer-circuits.pub/2022/toy_model/index.html",
+    "k": "paper",
+    "m": "why single neurons rarely mean one thing"
+   },
+   {
+    "t": "How to become a mechanistic interpretability researcher",
+    "by": "Neel Nanda",
+    "u": "https://www.alignmentforum.org/posts/jP9KDyMkchuv6tHwm/how-to-become-a-mechanistic-interpretability-researcher",
+    "k": "course",
+    "m": "a concrete, opinionated study path with exercises"
+   },
+   {
+    "t": "TransformerLens",
+    "by": "Neel Nanda et al.",
+    "u": "https://transformerlensorg.github.io/TransformerLens/",
+    "k": "docs",
+    "m": "MIT · the library most interpretability work runs on"
+   },
+   {
+    "t": "ARENA",
+    "by": "ARENA",
+    "u": "https://www.arena.education/",
+    "k": "course",
+    "m": "free curriculum · transformers, interpretability and RL, as exercises"
+   },
+   {
+    "t": "AI Safety Fundamentals",
+    "by": "BlueDot Impact",
+    "u": "https://bluedot.org/",
+    "k": "course",
+    "m": "free · curricula and readings, alignment and governance tracks"
+   },
+   {
+    "t": "Distill",
+    "by": "Distill",
+    "u": "https://distill.pub/",
+    "k": "reference",
+    "m": "archived but unmatched · interactive explanations of what networks learn"
+   },
+   {
+    "t": "Concrete Problems in AI Safety",
+    "by": "Amodei et al.",
+    "u": "https://arxiv.org/abs/1606.06565",
+    "k": "paper",
+    "m": "the 2016 paper that framed the practical questions"
+   },
+   {
+    "t": "Responsible Scaling / model cards",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/hub/model-cards",
+    "k": "docs",
+    "m": "how to document a model honestly, including what it fails at"
+   }
+  ]
+ },
+ {
+  "n": "18",
+  "id": "engineering",
+  "title": "Shipping it: MLOps & systems",
+  "note": "The distance between a notebook that works and a service that keeps working.",
+  "items": [
+   {
+    "t": "Made With ML",
+    "by": "Goku Mohandas",
+    "u": "https://madewithml.com/",
+    "k": "course",
+    "m": "free · MIT licence · design, develop, deploy, iterate"
+   },
+   {
+    "t": "Full Stack Deep Learning",
+    "by": "FSDL",
+    "u": "https://fullstackdeeplearning.com/course/",
+    "k": "course",
+    "m": "free · lectures and labs on building ML-powered products"
+   },
+   {
+    "t": "CS329S: Machine Learning Systems Design",
+    "by": "Chip Huyen · Stanford",
+    "u": "https://stanford-cs329s.github.io/",
+    "k": "course",
+    "m": "slides, notes and readings, all public"
+   },
+   {
+    "t": "ML Engineering Open Book",
+    "by": "Stas Bekman",
+    "u": "https://github.com/stas00/ml-engineering",
+    "k": "book",
+    "m": "free · hard-won operational detail on large training runs"
+   },
+   {
+    "t": "MLOps Zoomcamp",
+    "by": "DataTalks.Club",
+    "u": "https://github.com/DataTalksClub/mlops-zoomcamp",
+    "k": "course",
+    "m": "free · nine weeks, run publicly every year"
+   },
+   {
+    "t": "LLM Zoomcamp",
+    "by": "DataTalks.Club",
+    "u": "https://github.com/DataTalksClub/llm-zoomcamp",
+    "k": "course",
+    "m": "free · building an LLM application end to end"
+   },
+   {
+    "t": "W&B Courses",
+    "by": "Weights & Biases",
+    "u": "https://wandb.ai/site/courses/",
+    "k": "course",
+    "m": "free · experiment tracking, evaluation and LLM-app courses"
+   },
+   {
+    "t": "MLOps: continuous delivery and automation pipelines",
+    "by": "Google Cloud",
+    "u": "https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning",
+    "k": "article",
+    "m": "the maturity-model write-up everyone quotes"
+   },
+   {
+    "t": "Gradio documentation",
+    "by": "Hugging Face",
+    "u": "https://gradio.app/docs",
+    "k": "docs",
+    "m": "Apache-2.0 · the fastest way to put a model in front of a person"
+   },
+   {
+    "t": "Hugging Face Hub documentation",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/hub/index",
+    "k": "docs",
+    "m": "publishing models, datasets and Spaces properly"
+   }
+  ]
+ },
+ {
+  "n": "19",
+  "id": "current",
+  "title": "Staying current",
+  "note": "The field moves fast enough that a course from last year has gaps. These are the feeds worth keeping.",
+  "items": [
+   {
+    "t": "Daily Papers",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/papers",
+    "k": "reference",
+    "m": "a curated, discussed selection rather than the full arXiv firehose"
+   },
+   {
+    "t": "arXiv cs.CL — recent",
+    "by": "arXiv",
+    "u": "https://arxiv.org/list/cs.CL/recent",
+    "k": "reference",
+    "m": "the firehose itself, when you want it"
+   },
+   {
+    "t": "Lil'Log",
+    "by": "Lilian Weng",
+    "u": "https://lilianweng.github.io/",
+    "k": "blog",
+    "m": "long, careful surveys · several are the best sources on their topic"
+   },
+   {
+    "t": "Ahead of AI",
+    "by": "Sebastian Raschka",
+    "u": "https://magazine.sebastianraschka.com/",
+    "k": "blog",
+    "m": "research summaries with working code, free archive"
+   },
+   {
+    "t": "Connected Papers",
+    "by": "Connected Papers",
+    "u": "https://www.connectedpapers.com/",
+    "k": "reference",
+    "m": "free tier · the citation graph around a paper, as a map"
+   },
+   {
+    "t": "alphaXiv",
+    "by": "alphaXiv",
+    "u": "https://www.alphaxiv.org/",
+    "k": "reference",
+    "m": "arXiv with a comment layer, useful for hard papers"
+   },
+   {
+    "t": "The Gradient",
+    "by": "The Gradient",
+    "u": "https://thegradient.pub/",
+    "k": "blog",
+    "m": "longer-form essays, editorially reviewed"
+   },
+   {
+    "t": "Import AI",
+    "by": "Jack Clark",
+    "u": "https://importai.substack.com/",
+    "k": "blog",
+    "m": "weekly · research plus policy, from someone who reads everything"
+   },
+   {
+    "t": "AI Index Report",
+    "by": "Stanford HAI",
+    "u": "https://hai.stanford.edu/ai-index",
+    "k": "reference",
+    "m": "free · the annual numbers, with sources"
+   },
+   {
+    "t": "How to Read a Paper",
+    "by": "S. Keshav",
+    "u": "https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf",
+    "k": "article",
+    "m": "three pages · the three-pass method, and it works"
+   }
+  ]
+ },
+ {
+  "n": "20",
+  "id": "practice",
+  "title": "Free compute & practice",
+  "note": "Nothing on this page sticks until you run it. All of these give you a GPU without a credit card.",
+  "items": [
+   {
+    "t": "Google Colab",
+    "by": "Google",
+    "u": "https://colab.research.google.com/",
+    "k": "tool",
+    "m": "free tier · a T4 GPU, enough for LoRA fine-tuning of small models"
+   },
+   {
+    "t": "Kaggle Notebooks",
+    "by": "Kaggle",
+    "u": "https://www.kaggle.com/docs/notebooks",
+    "k": "tool",
+    "m": "free · ~30 GPU hours a week, plus TPU v3-8 and v5e quotas"
+   },
+   {
+    "t": "Kaggle Competitions",
+    "by": "Kaggle",
+    "u": "https://www.kaggle.com/competitions",
+    "k": "tool",
+    "m": "the only reliable way to find out whether you actually know this"
+   },
+   {
+    "t": "Hugging Face Spaces",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces",
+    "k": "tool",
+    "m": "free CPU hosting for demos, and the source of thousands of examples"
+   },
+   {
+    "t": "Hugging Face Learn",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn",
+    "k": "course",
+    "m": "the index of every free course they publish, in one place"
+   },
+   {
+    "t": "Lightning Studios",
+    "by": "Lightning AI",
+    "u": "https://lightning.ai/",
+    "k": "tool",
+    "m": "free monthly GPU credits, persistent environments"
+   },
+   {
+    "t": "Kaggle Datasets",
+    "by": "Kaggle",
+    "u": "https://www.kaggle.com/datasets",
+    "k": "reference",
+    "m": "a few hundred thousand public datasets to practise on"
+   },
+   {
+    "t": "Open LLM resources on the Hub",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/models",
+    "k": "reference",
+    "m": "start from a small open base model; the 0.5B ones train in minutes"
+   }
+  ]
+ }
+]

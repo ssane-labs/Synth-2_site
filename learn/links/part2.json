@@ -1,0 +1,730 @@
+[
+ {
+  "n": "08",
+  "id": "finetuning",
+  "title": "Fine-tuning",
+  "note": "Taking a trained model and bending it to your task. The largest section here, because it is the part most people actually need and the part with the most folklore around it.",
+  "items": [
+   {
+    "t": "Fine-tune a pretrained model",
+    "by": "Hugging Face Transformers",
+    "u": "https://huggingface.co/docs/transformers/training",
+    "k": "docs",
+    "m": "official · the honest starting point, Trainer and a plain PyTorch loop"
+   },
+   {
+    "t": "PEFT documentation",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/peft/index",
+    "k": "docs",
+    "m": "LoRA, prefix tuning, IA3, adapters · conceptual guides plus API"
+   },
+   {
+    "t": "TRL — Transformer Reinforcement Learning",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/trl/index",
+    "k": "docs",
+    "m": "the library behind most open SFT, DPO and GRPO recipes"
+   },
+   {
+    "t": "SFTTrainer guide",
+    "by": "Hugging Face TRL",
+    "u": "https://huggingface.co/docs/trl/sft_trainer",
+    "k": "docs",
+    "m": "supervised fine-tuning, including packing and completion-only loss"
+   },
+   {
+    "t": "Unsloth documentation",
+    "by": "Unsloth",
+    "u": "https://unsloth.ai/docs",
+    "k": "docs",
+    "m": "free · fine-tuning that fits in a free Colab GPU, with the tricks explained"
+   },
+   {
+    "t": "Unsloth notebooks",
+    "by": "Unsloth",
+    "u": "https://github.com/unslothai/notebooks",
+    "k": "notebook",
+    "m": "100+ ready Colab notebooks — Llama, Qwen, Gemma, Mistral, vision, GRPO"
+   },
+   {
+    "t": "Axolotl documentation",
+    "by": "Axolotl AI",
+    "u": "https://docs.axolotl.ai/",
+    "k": "docs",
+    "m": "Apache-2.0 · config-file fine-tuning; the YAML examples are the real course"
+   },
+   {
+    "t": "LLaMA-Factory",
+    "by": "hiyouga et al.",
+    "u": "https://github.com/hiyouga/LLaMA-Factory",
+    "k": "code",
+    "m": "Apache-2.0 · 100+ models, a web UI, and every method in one place"
+   },
+   {
+    "t": "torchtune",
+    "by": "PyTorch",
+    "u": "https://github.com/meta-pytorch/torchtune",
+    "k": "docs",
+    "m": "native PyTorch recipes you can read top to bottom"
+   },
+   {
+    "t": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "by": "Hu et al.",
+    "u": "https://arxiv.org/abs/2106.09685",
+    "k": "paper",
+    "m": "the paper that made fine-tuning affordable"
+   },
+   {
+    "t": "QLoRA: Efficient Finetuning of Quantized LLMs",
+    "by": "Dettmers et al.",
+    "u": "https://arxiv.org/abs/2305.14314",
+    "k": "paper",
+    "m": "65B on a single 48 GB card · read alongside the bitsandbytes docs"
+   },
+   {
+    "t": "Making LLMs even more accessible with bitsandbytes and QLoRA",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/4bit-transformers-bitsandbytes",
+    "k": "article",
+    "m": "the practical write-up of 4-bit fine-tuning"
+   },
+   {
+    "t": "Parameter-Efficient Fine-Tuning using PEFT",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/peft",
+    "k": "article",
+    "m": "the short version, with working code"
+   },
+   {
+    "t": "Alignment Handbook",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/alignment-handbook",
+    "k": "code",
+    "m": "Apache-2.0 · full, reproducible recipes: SFT then DPO, configs included"
+   },
+   {
+    "t": "smol-course",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/smol-course",
+    "k": "course",
+    "m": "a hands-on course on aligning small models on modest hardware"
+   },
+   {
+    "t": "Finetuning Large Language Models",
+    "by": "DeepLearning.AI & Lamini",
+    "u": "https://www.deeplearning.ai/courses/finetuning-large-language-models",
+    "k": "course",
+    "m": "free short course · ~1 h · when to fine-tune at all"
+   },
+   {
+    "t": "Practical Tips for Finetuning LLMs Using LoRA",
+    "by": "Sebastian Raschka",
+    "u": "https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms",
+    "k": "article",
+    "m": "hundreds of ablations distilled into rules of thumb"
+   },
+   {
+    "t": "Finetuning LLMs Efficiently with Adapters",
+    "by": "Sebastian Raschka",
+    "u": "https://magazine.sebastianraschka.com/p/finetuning-llms-with-adapters",
+    "k": "article",
+    "m": "what each PEFT method actually changes in the weights"
+   },
+   {
+    "t": "Chat templates",
+    "by": "Hugging Face Transformers",
+    "u": "https://huggingface.co/docs/transformers/chat_templating",
+    "k": "docs",
+    "m": "the single most common cause of a fine-tune that trains but never answers"
+   },
+   {
+    "t": "Fine-tune Llama 3 with ORPO",
+    "by": "Maxime Labonne",
+    "u": "https://huggingface.co/blog/mlabonne/orpo-llama-3",
+    "k": "article",
+    "m": "SFT and preference alignment collapsed into one step"
+   },
+   {
+    "t": "Llama Cookbook",
+    "by": "Meta",
+    "u": "https://github.com/meta-llama/llama-cookbook",
+    "k": "notebook",
+    "m": "official fine-tuning and deployment recipes"
+   },
+   {
+    "t": "Gemma Cookbook",
+    "by": "Google",
+    "u": "https://github.com/google-gemini/gemma-cookbook",
+    "k": "notebook",
+    "m": "the same idea for Gemma, including Keras and JAX paths"
+   },
+   {
+    "t": "Finetuned Language Models Are Zero-Shot Learners (FLAN)",
+    "by": "Wei et al.",
+    "u": "https://arxiv.org/abs/2109.01652",
+    "k": "paper",
+    "m": "the paper that introduced instruction tuning"
+   },
+   {
+    "t": "Self-Instruct",
+    "by": "Wang et al.",
+    "u": "https://arxiv.org/abs/2212.10560",
+    "k": "paper",
+    "m": "how to generate the instruction data you do not have"
+   },
+   {
+    "t": "LIMA: Less Is More for Alignment",
+    "by": "Zhou et al.",
+    "u": "https://arxiv.org/abs/2305.11206",
+    "k": "paper",
+    "m": "1000 carefully chosen examples beating far larger sets"
+   },
+   {
+    "t": "mergekit",
+    "by": "Arcee AI",
+    "u": "https://github.com/arcee-ai/mergekit",
+    "k": "code",
+    "m": "merging fine-tuned checkpoints instead of retraining"
+   },
+   {
+    "t": "Hugging Face Open-Source AI Cookbook",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/cookbook/index",
+    "k": "notebook",
+    "m": "dozens of task-shaped recipes, all runnable"
+   },
+   {
+    "t": "PyTorch Lightning / Fabric fine-tuning studios",
+    "by": "Lightning AI",
+    "u": "https://lightning.ai/lightning-ai/studios",
+    "k": "notebook",
+    "m": "free-tier GPU studios with published fine-tuning templates"
+   }
+  ]
+ },
+ {
+  "n": "09",
+  "id": "alignment",
+  "title": "Preference tuning & RLHF",
+  "note": "Turning a model that completes text into one that answers. RLHF, DPO, GRPO, and the reasoning-model recipes that followed.",
+  "items": [
+   {
+    "t": "The RLHF Book",
+    "by": "Nathan Lambert",
+    "u": "https://rlhfbook.com/",
+    "k": "book",
+    "m": "free online · the only full-length treatment of RLHF, written openly"
+   },
+   {
+    "t": "Illustrating Reinforcement Learning from Human Feedback",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/rlhf",
+    "k": "article",
+    "m": "the diagrams most people learned RLHF from"
+   },
+   {
+    "t": "Training language models to follow instructions (InstructGPT)",
+    "by": "Ouyang et al.",
+    "u": "https://arxiv.org/abs/2203.02155",
+    "k": "paper",
+    "m": "the paper behind the chat models you use"
+   },
+   {
+    "t": "Direct Preference Optimization",
+    "by": "Rafailov et al.",
+    "u": "https://arxiv.org/abs/2305.18290",
+    "k": "paper",
+    "m": "RLHF's result without the reinforcement learning"
+   },
+   {
+    "t": "DPOTrainer",
+    "by": "Hugging Face TRL",
+    "u": "https://huggingface.co/docs/trl/dpo_trainer",
+    "k": "docs",
+    "m": "DPO in practice, with the dataset format spelled out"
+   },
+   {
+    "t": "GRPOTrainer",
+    "by": "Hugging Face TRL",
+    "u": "https://huggingface.co/docs/trl/grpo_trainer",
+    "k": "docs",
+    "m": "group-relative policy optimisation, the R1-style recipe"
+   },
+   {
+    "t": "DeepSeek-R1: incentivising reasoning via RL",
+    "by": "DeepSeek-AI",
+    "u": "https://arxiv.org/abs/2501.12948",
+    "k": "paper",
+    "m": "reasoning emerging from reinforcement learning alone"
+   },
+   {
+    "t": "open-r1",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/open-r1",
+    "k": "code",
+    "m": "a fully open reproduction of R1 · read the issues as much as the code"
+   },
+   {
+    "t": "Constitutional AI: Harmlessness from AI Feedback",
+    "by": "Anthropic",
+    "u": "https://arxiv.org/abs/2212.08073",
+    "k": "paper",
+    "m": "replacing part of the human feedback with a written constitution"
+   },
+   {
+    "t": "Reward Hacking in Reinforcement Learning",
+    "by": "Lilian Weng",
+    "u": "https://lilianweng.github.io/posts/2024-11-28-reward-hacking/",
+    "k": "article",
+    "m": "every way a reward model gets gamed"
+   },
+   {
+    "t": "Interconnects",
+    "by": "Nathan Lambert",
+    "u": "https://www.interconnects.ai/",
+    "k": "blog",
+    "m": "the running commentary on post-training, from inside the field"
+   },
+   {
+    "t": "Proximal Policy Optimization explained",
+    "by": "Hugging Face Deep RL Course",
+    "u": "https://huggingface.co/learn/deep-rl-course/unit8/introduction",
+    "k": "course",
+    "m": "the algorithm underneath classic RLHF"
+   },
+   {
+    "t": "Anthropic's Claude constitution",
+    "by": "Anthropic",
+    "u": "https://www.anthropic.com/news/claudes-constitution",
+    "k": "reference",
+    "m": "what an actual alignment specification looks like in writing"
+   },
+   {
+    "t": "Tulu 3: pushing frontiers in open post-training",
+    "by": "Allen Institute for AI",
+    "u": "https://arxiv.org/abs/2411.15124",
+    "k": "paper",
+    "m": "a complete, documented, reproducible post-training pipeline"
+   }
+  ]
+ },
+ {
+  "n": "10",
+  "id": "rl",
+  "title": "Reinforcement learning",
+  "note": "The background the section above assumes. Worth a detour if policy gradients are still a rumour to you.",
+  "items": [
+   {
+    "t": "Spinning Up in Deep RL",
+    "by": "OpenAI",
+    "u": "https://spinningup.openai.com/en/latest/",
+    "k": "course",
+    "m": "free · MIT licence · theory, key papers and clean implementations"
+   },
+   {
+    "t": "Deep RL Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/deep-rl-course",
+    "k": "course",
+    "m": "free · Apache-2.0 · hands-on, with a leaderboard to train against"
+   },
+   {
+    "t": "Reinforcement Learning: An Introduction",
+    "by": "Sutton & Barto",
+    "u": "http://incompleteideas.net/book/the-book-2nd.html",
+    "k": "book",
+    "m": "free PDF · the field's textbook, from its authors"
+   },
+   {
+    "t": "RL Lecture Series",
+    "by": "David Silver · DeepMind & UCL",
+    "u": "https://www.youtube.com/playlist?list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm",
+    "k": "video",
+    "m": "ten lectures, still the clearest introduction on video"
+   },
+   {
+    "t": "CS285: Deep Reinforcement Learning",
+    "by": "Sergey Levine · UC Berkeley",
+    "u": "https://rail.eecs.berkeley.edu/deeprlcourse/",
+    "k": "course",
+    "m": "lectures, homework and video, all public"
+   },
+   {
+    "t": "Gymnasium documentation",
+    "by": "Farama Foundation",
+    "u": "https://gymnasium.farama.org/",
+    "k": "docs",
+    "m": "the environment API everything else is built on"
+   },
+   {
+    "t": "Stable-Baselines3",
+    "by": "DLR-RM",
+    "u": "https://stable-baselines3.readthedocs.io/en/master/",
+    "k": "docs",
+    "m": "reliable reference implementations to compare yours against"
+   },
+   {
+    "t": "CleanRL",
+    "by": "Costa Huang et al.",
+    "u": "https://docs.cleanrl.dev/",
+    "k": "code",
+    "m": "single-file implementations with published training curves"
+   }
+  ]
+ },
+ {
+  "n": "11",
+  "id": "evaluation",
+  "title": "Evaluation",
+  "note": "The part people skip, and the reason so many fine-tunes look great in a demo and fail in use.",
+  "items": [
+   {
+    "t": "Evaluation Guidebook",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/evaluation-guidebook",
+    "k": "book",
+    "m": "free · when to use which evaluation and how each one lies to you"
+   },
+   {
+    "t": "lm-evaluation-harness",
+    "by": "EleutherAI",
+    "u": "https://github.com/EleutherAI/lm-evaluation-harness",
+    "k": "code",
+    "m": "MIT · the de-facto standard harness · 60+ benchmarks"
+   },
+   {
+    "t": "Inspect",
+    "by": "UK AI Security Institute",
+    "u": "https://inspect.aisi.org.uk/",
+    "k": "docs",
+    "m": "MIT · a serious framework for writing your own evaluations"
+   },
+   {
+    "t": "HELM",
+    "by": "Stanford CRFM",
+    "u": "https://crfm.stanford.edu/helm/",
+    "k": "reference",
+    "m": "holistic evaluation, with all raw results published"
+   },
+   {
+    "t": "Evaluate",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/evaluate/index",
+    "k": "docs",
+    "m": "metrics, with their limitations documented next to them"
+   },
+   {
+    "t": "LMArena",
+    "by": "LMSYS",
+    "u": "https://lmarena.ai/leaderboard",
+    "k": "reference",
+    "m": "blind pairwise human comparison at scale"
+   },
+   {
+    "t": "Open LLM Leaderboard archive",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard",
+    "k": "reference",
+    "m": "and, more usefully, the write-ups on why it kept being gamed"
+   },
+   {
+    "t": "Ragas",
+    "by": "Exploding Gradients",
+    "u": "https://docs.ragas.io/en/stable/",
+    "k": "docs",
+    "m": "evaluation aimed specifically at retrieval pipelines"
+   },
+   {
+    "t": "Judging LLM-as-a-Judge (MT-Bench)",
+    "by": "Zheng et al.",
+    "u": "https://arxiv.org/abs/2306.05685",
+    "k": "paper",
+    "m": "how far a model-as-grader can be trusted, measured"
+   },
+   {
+    "t": "Your AI Product Needs Evals",
+    "by": "Hamel Husain",
+    "u": "https://hamel.dev/blog/posts/evals/",
+    "k": "article",
+    "m": "the practitioner's argument for building evals before features"
+   }
+  ]
+ },
+ {
+  "n": "12",
+  "id": "data",
+  "title": "Data & datasets",
+  "note": "Model quality is mostly data quality. This is the least glamorous section and the highest-leverage one.",
+  "items": [
+   {
+    "t": "Datasets documentation",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/datasets/index",
+    "k": "docs",
+    "m": "loading, streaming and processing corpora that do not fit in RAM"
+   },
+   {
+    "t": "FineWeb: decanting the web for the finest text data",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces/HuggingFaceFW/blogpost-fineweb-v1",
+    "k": "article",
+    "m": "an unusually complete account of how a 15T-token corpus was filtered"
+   },
+   {
+    "t": "datatrove",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/datatrove",
+    "k": "code",
+    "m": "Apache-2.0 · the pipeline library FineWeb was built with"
+   },
+   {
+    "t": "Dolma",
+    "by": "Allen Institute for AI",
+    "u": "https://github.com/allenai/dolma",
+    "k": "code",
+    "m": "3T-token open corpus plus the toolkit that produced it"
+   },
+   {
+    "t": "The Pile",
+    "by": "EleutherAI",
+    "u": "https://pile.eleuther.ai/",
+    "k": "reference",
+    "m": "the 825 GiB corpus, with a paper documenting every component"
+   },
+   {
+    "t": "distilabel",
+    "by": "Argilla",
+    "u": "https://distilabel.argilla.io/",
+    "k": "docs",
+    "m": "synthetic data generation with the provenance kept intact"
+   },
+   {
+    "t": "Argilla",
+    "by": "Argilla · Hugging Face",
+    "u": "https://docs.argilla.io/",
+    "k": "docs",
+    "m": "human annotation and dataset curation, self-hostable"
+   },
+   {
+    "t": "Introduction to Data-Centric AI",
+    "by": "MIT",
+    "u": "https://dcai.csail.mit.edu/",
+    "k": "course",
+    "m": "free · lectures and labs on improving data rather than models"
+   },
+   {
+    "t": "Cosmopedia: how to create large synthetic datasets",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/cosmopedia",
+    "k": "article",
+    "m": "25B synthetic tokens, and the prompt design behind them"
+   },
+   {
+    "t": "Hugging Face Hub datasets",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/datasets",
+    "k": "reference",
+    "m": "where to look first before building anything yourself"
+   },
+   {
+    "t": "Data Cards / Dataset documentation",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/hub/datasets-cards",
+    "k": "docs",
+    "m": "how to document a corpus so that it stays usable"
+   }
+  ]
+ },
+ {
+  "n": "13",
+  "id": "efficiency",
+  "title": "Quantization, inference & speed",
+  "note": "Getting a model to fit, and then to be fast. GPU arithmetic, kernels, quantization formats and serving.",
+  "items": [
+   {
+    "t": "Quantization",
+    "by": "Hugging Face Transformers",
+    "u": "https://huggingface.co/docs/transformers/quantization/overview",
+    "k": "docs",
+    "m": "every supported format compared in one table"
+   },
+   {
+    "t": "bitsandbytes",
+    "by": "bitsandbytes",
+    "u": "https://huggingface.co/docs/bitsandbytes/index",
+    "k": "docs",
+    "m": "8-bit and 4-bit, the backend behind QLoRA"
+   },
+   {
+    "t": "llama.cpp",
+    "by": "ggml.org",
+    "u": "https://github.com/ggml-org/llama.cpp",
+    "k": "code",
+    "m": "MIT · GGUF, CPU inference, and the quant formats everyone ships"
+   },
+   {
+    "t": "vLLM documentation",
+    "by": "vLLM",
+    "u": "https://docs.vllm.ai/en/latest/",
+    "k": "docs",
+    "m": "Apache-2.0 · paged attention and continuous batching, explained by the implementers"
+   },
+   {
+    "t": "Making Deep Learning Go Brrrr From First Principles",
+    "by": "Horace He",
+    "u": "https://horace.io/brrr_intro.html",
+    "k": "article",
+    "m": "compute-bound, memory-bound, overhead-bound — the mental model"
+   },
+   {
+    "t": "Optimizing LLMs for speed and memory",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/blog/optimize-llm",
+    "k": "article",
+    "m": "quantization, Flash Attention and KV caching, with the arithmetic shown"
+   },
+   {
+    "t": "FlashAttention",
+    "by": "Dao et al.",
+    "u": "https://arxiv.org/abs/2205.14135",
+    "k": "paper",
+    "m": "the IO-aware attention kernel now in everything"
+   },
+   {
+    "t": "GPTQ",
+    "by": "Frantar et al.",
+    "u": "https://arxiv.org/abs/2210.17323",
+    "k": "paper",
+    "m": "post-training quantization down to 3-4 bits"
+   },
+   {
+    "t": "AWQ: Activation-aware Weight Quantization",
+    "by": "Lin et al.",
+    "u": "https://arxiv.org/abs/2306.00978",
+    "k": "paper",
+    "m": "the other format you will meet on the Hub"
+   },
+   {
+    "t": "GPU MODE lectures",
+    "by": "GPU MODE",
+    "u": "https://github.com/gpu-mode/lectures",
+    "k": "course",
+    "m": "free · a whole community-run course on CUDA and kernel writing"
+   },
+   {
+    "t": "Triton tutorials",
+    "by": "OpenAI",
+    "u": "https://triton-lang.org/main/getting-started/tutorials/index.html",
+    "k": "docs",
+    "m": "writing GPU kernels in Python, starting from vector add"
+   },
+   {
+    "t": "CUDA C++ Programming Guide",
+    "by": "NVIDIA",
+    "u": "https://docs.nvidia.com/cuda/cuda-c-programming-guide/",
+    "k": "docs",
+    "m": "the primary source, when the tutorials run out"
+   },
+   {
+    "t": "Optimum",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/optimum/index",
+    "k": "docs",
+    "m": "ONNX, TensorRT and hardware-specific export paths"
+   },
+   {
+    "t": "Ollama",
+    "by": "Ollama",
+    "u": "https://github.com/ollama/ollama",
+    "k": "code",
+    "m": "MIT · the shortest path to running your fine-tune locally"
+   },
+   {
+    "t": "Text Generation Inference",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/text-generation-inference/index",
+    "k": "docs",
+    "m": "production serving, with the trade-offs documented"
+   }
+  ]
+ },
+ {
+  "n": "14",
+  "id": "rag",
+  "title": "RAG, embeddings & retrieval",
+  "note": "Putting the knowledge in the context instead of in the weights. Usually cheaper and more correctable than fine-tuning.",
+  "items": [
+   {
+    "t": "Sentence Transformers",
+    "by": "UKP Lab · Hugging Face",
+    "u": "https://sbert.net/",
+    "k": "docs",
+    "m": "Apache-2.0 · embeddings, and how to fine-tune your own"
+   },
+   {
+    "t": "Advanced RAG on Hugging Face documentation",
+    "by": "Hugging Face Cookbook",
+    "u": "https://huggingface.co/learn/cookbook/advanced_rag",
+    "k": "notebook",
+    "m": "a complete pipeline in one runnable notebook"
+   },
+   {
+    "t": "MTEB leaderboard",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces/mteb/leaderboard",
+    "k": "reference",
+    "m": "how to choose an embedding model on evidence"
+   },
+   {
+    "t": "LangChain tutorials",
+    "by": "LangChain",
+    "u": "https://docs.langchain.com/oss/python/langchain/overview",
+    "k": "docs",
+    "m": "the most common orchestration layer, taught by example"
+   },
+   {
+    "t": "LlamaIndex documentation",
+    "by": "LlamaIndex",
+    "u": "https://developers.llamaindex.ai/python/framework/",
+    "k": "docs",
+    "m": "indexing and query engines, the other standard option"
+   },
+   {
+    "t": "FAISS wiki",
+    "by": "Meta AI",
+    "u": "https://github.com/facebookresearch/faiss/wiki",
+    "k": "docs",
+    "m": "vector search from the library that defined it"
+   },
+   {
+    "t": "Pinecone Learn",
+    "by": "Pinecone",
+    "u": "https://www.pinecone.io/learn/",
+    "k": "course",
+    "m": "free · vendor-made but unusually honest on the fundamentals"
+   },
+   {
+    "t": "Chroma documentation",
+    "by": "Chroma",
+    "u": "https://docs.trychroma.com/",
+    "k": "docs",
+    "m": "the lightest vector store to start with"
+   },
+   {
+    "t": "Retrieval-Augmented Generation (original paper)",
+    "by": "Lewis et al.",
+    "u": "https://arxiv.org/abs/2005.11401",
+    "k": "paper",
+    "m": "where the term came from, in 2020"
+   },
+   {
+    "t": "Contextual Retrieval",
+    "by": "Anthropic",
+    "u": "https://www.anthropic.com/engineering/contextual-retrieval",
+    "k": "article",
+    "m": "a measured fix for the chunking problem, with numbers"
+   }
+  ]
+ }
+]

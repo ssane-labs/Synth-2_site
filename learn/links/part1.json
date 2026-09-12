@@ -1,0 +1,730 @@
+[
+ {
+  "n": "01",
+  "id": "foundations",
+  "title": "Foundations",
+  "note": "The linear algebra, calculus and probability every later section quietly assumes. Skip it if you already read a Jacobian without flinching.",
+  "items": [
+   {
+    "t": "Essence of Linear Algebra",
+    "by": "3Blue1Brown",
+    "u": "https://www.3blue1brown.com/topics/linear-algebra",
+    "k": "video",
+    "m": "15 short films · the geometric picture behind matrices"
+   },
+   {
+    "t": "Essence of Calculus",
+    "by": "3Blue1Brown",
+    "u": "https://www.3blue1brown.com/topics/calculus",
+    "k": "video",
+    "m": "12 films · derivatives and the chain rule, visually"
+   },
+   {
+    "t": "Neural Networks",
+    "by": "3Blue1Brown",
+    "u": "https://www.3blue1brown.com/topics/neural-networks",
+    "k": "video",
+    "m": "backprop and, since 2024, attention and transformers"
+   },
+   {
+    "t": "Mathematics for Machine Learning",
+    "by": "Deisenroth, Faisal & Ong",
+    "u": "https://mml-book.github.io/",
+    "k": "book",
+    "m": "free PDF · covers exactly what ML needs, no more"
+   },
+   {
+    "t": "MIT 18.06 Linear Algebra",
+    "by": "Gilbert Strang · MIT OCW",
+    "u": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/",
+    "k": "course",
+    "m": "35 lectures · CC BY-NC-SA · the classic"
+   },
+   {
+    "t": "MIT 18.065 Matrix Methods in Data Analysis",
+    "by": "Gilbert Strang · MIT OCW",
+    "u": "https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/",
+    "k": "course",
+    "m": "Strang again, aimed squarely at learning problems"
+   },
+   {
+    "t": "Seeing Theory",
+    "by": "Brown University",
+    "u": "https://seeing-theory.brown.edu/",
+    "k": "interactive",
+    "m": "probability and statistics you can drag around"
+   },
+   {
+    "t": "Introduction to Probability for Data Science",
+    "by": "Stanley Chan · Purdue",
+    "u": "https://probability4datascience.com/",
+    "k": "book",
+    "m": "free PDF released by the author"
+   },
+   {
+    "t": "The Matrix Calculus You Need For Deep Learning",
+    "by": "Parr & Howard",
+    "u": "https://explained.ai/matrix-calculus/",
+    "k": "article",
+    "m": "one long page that replaces a semester of confusion"
+   },
+   {
+    "t": "Computational Linear Algebra",
+    "by": "fast.ai",
+    "u": "https://github.com/fastai/numerical-linear-algebra",
+    "k": "course",
+    "m": "notebooks plus video lectures, the numerical side"
+   },
+   {
+    "t": "Statistics & Probability",
+    "by": "Khan Academy",
+    "u": "https://www.khanacademy.org/math/statistics-probability",
+    "k": "course",
+    "m": "if the ground floor is missing"
+   },
+   {
+    "t": "Immersive Linear Algebra",
+    "by": "Strom, Astrom & Akenine-Moller",
+    "u": "https://immersivemath.com/ila/",
+    "k": "book",
+    "m": "the first linear algebra book with fully interactive figures"
+   }
+  ]
+ },
+ {
+  "n": "02",
+  "id": "python",
+  "title": "Python & the tooling",
+  "note": "You will spend more hours in NumPy, pandas and a terminal than in any model architecture.",
+  "items": [
+   {
+    "t": "CS50's Introduction to Programming with Python",
+    "by": "Harvard",
+    "u": "https://cs50.harvard.edu/python/",
+    "k": "course",
+    "m": "free · CC BY-NC-SA · from zero"
+   },
+   {
+    "t": "Python Data Science Handbook",
+    "by": "Jake VanderPlas",
+    "u": "https://jakevdp.github.io/PythonDataScienceHandbook/",
+    "k": "book",
+    "m": "full text online · NumPy, pandas, matplotlib, scikit-learn"
+   },
+   {
+    "t": "NumPy: the absolute basics for beginners",
+    "by": "NumPy",
+    "u": "https://numpy.org/doc/stable/user/absolute_beginners.html",
+    "k": "docs",
+    "m": "official, short, correct"
+   },
+   {
+    "t": "10 minutes to pandas",
+    "by": "pandas",
+    "u": "https://pandas.pydata.org/docs/user_guide/10min.html",
+    "k": "docs",
+    "m": "the fastest honest introduction"
+   },
+   {
+    "t": "Scientific Visualization: Python + Matplotlib",
+    "by": "Nicolas Rougier",
+    "u": "https://github.com/rougier/scientific-visualization-book",
+    "k": "book",
+    "m": "free PDF · how to make a figure that is not embarrassing"
+   },
+   {
+    "t": "The Missing Semester of Your CS Education",
+    "by": "MIT",
+    "u": "https://missing.csail.mit.edu/",
+    "k": "course",
+    "m": "shell, git, tmux, debugging · CC BY-NC-SA"
+   },
+   {
+    "t": "Pro Git",
+    "by": "Chacon & Straub",
+    "u": "https://git-scm.com/book/en/v2",
+    "k": "book",
+    "m": "free · CC BY-NC-SA · the entire book online"
+   },
+   {
+    "t": "Learn Git Branching",
+    "by": "Peter Cottle",
+    "u": "https://learngitbranching.js.org/",
+    "k": "interactive",
+    "m": "git as a visual puzzle game"
+   },
+   {
+    "t": "The Python Tutorial",
+    "by": "Python Software Foundation",
+    "u": "https://docs.python.org/3/tutorial/",
+    "k": "docs",
+    "m": "the official tour of the language, still the most accurate one"
+   },
+   {
+    "t": "uv — Python packaging that is not painful",
+    "by": "Astral",
+    "u": "https://docs.astral.sh/uv/",
+    "k": "docs",
+    "m": "the modern, fast way to manage environments"
+   },
+   {
+    "t": "Jupyter Notebook documentation",
+    "by": "Project Jupyter",
+    "u": "https://docs.jupyter.org/en/latest/",
+    "k": "docs",
+    "m": "the tool every course below hands you"
+   }
+  ]
+ },
+ {
+  "n": "03",
+  "id": "classical-ml",
+  "title": "Classical machine learning",
+  "note": "Gradient boosting still wins most tabular problems. Learn this before reaching for a transformer.",
+  "items": [
+   {
+    "t": "Machine Learning Crash Course",
+    "by": "Google",
+    "u": "https://developers.google.com/machine-learning/crash-course",
+    "k": "course",
+    "m": "free · ~15 h · interactive, rebuilt in 2024"
+   },
+   {
+    "t": "Machine Learning Specialization",
+    "by": "Andrew Ng · DeepLearning.AI",
+    "u": "https://www.coursera.org/specializations/machine-learning-introduction",
+    "k": "course",
+    "m": "free to audit · the canonical entry point"
+   },
+   {
+    "t": "Stanford CS229: Machine Learning",
+    "by": "Stanford",
+    "u": "https://cs229.stanford.edu/",
+    "k": "course",
+    "m": "lecture notes and problem sets, openly posted"
+   },
+   {
+    "t": "CS229 lecture videos",
+    "by": "Stanford Online",
+    "u": "https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",
+    "k": "video",
+    "m": "the full lecture series, Autumn 2018"
+   },
+   {
+    "t": "An Introduction to Statistical Learning",
+    "by": "James, Witten, Hastie & Tibshirani",
+    "u": "https://www.statlearning.com/",
+    "k": "book",
+    "m": "free PDF · Python and R editions · plus a free video course"
+   },
+   {
+    "t": "The Elements of Statistical Learning",
+    "by": "Hastie, Tibshirani & Friedman",
+    "u": "https://hastie.su.domains/ElemStatLearn/",
+    "k": "book",
+    "m": "free PDF · the harder sequel"
+   },
+   {
+    "t": "Kaggle Learn",
+    "by": "Kaggle",
+    "u": "https://www.kaggle.com/learn",
+    "k": "course",
+    "m": "~20 micro-courses, a few hours each, all in-browser"
+   },
+   {
+    "t": "scikit-learn User Guide",
+    "by": "scikit-learn",
+    "u": "https://scikit-learn.org/stable/user_guide.html",
+    "k": "docs",
+    "m": "a textbook disguised as documentation"
+   },
+   {
+    "t": "Machine Learning for Beginners",
+    "by": "Microsoft",
+    "u": "https://microsoft.github.io/ML-For-Beginners/",
+    "k": "course",
+    "m": "12 weeks, 26 lessons · MIT licence"
+   },
+   {
+    "t": "Data Science for Beginners",
+    "by": "Microsoft",
+    "u": "https://microsoft.github.io/Data-Science-For-Beginners/",
+    "k": "course",
+    "m": "10 weeks, 20 lessons · MIT licence"
+   },
+   {
+    "t": "mlcourse.ai",
+    "by": "Yury Kashnitsky · OpenDataScience",
+    "u": "https://mlcourse.ai/",
+    "k": "course",
+    "m": "free · notebooks, assignments and Kaggle contests"
+   },
+   {
+    "t": "XGBoost tutorials",
+    "by": "XGBoost",
+    "u": "https://xgboost.readthedocs.io/en/stable/tutorials/index.html",
+    "k": "docs",
+    "m": "the algorithm that quietly wins competitions"
+   },
+   {
+    "t": "Probabilistic Machine Learning",
+    "by": "Kevin Murphy",
+    "u": "https://probml.github.io/pml-book/",
+    "k": "book",
+    "m": "free draft PDFs of both volumes"
+   },
+   {
+    "t": "Google Machine Learning Guides",
+    "by": "Google",
+    "u": "https://developers.google.com/machine-learning/guides",
+    "k": "docs",
+    "m": "the rules-of-ML and tuning playbooks used internally"
+   }
+  ]
+ },
+ {
+  "n": "04",
+  "id": "deep-learning",
+  "title": "Deep learning",
+  "note": "Backpropagation, optimisers, regularisation, convolutions — the layer of knowledge that does not go stale.",
+  "items": [
+   {
+    "t": "Practical Deep Learning for Coders",
+    "by": "fast.ai · Jeremy Howard",
+    "u": "https://course.fast.ai/",
+    "k": "course",
+    "m": "free · top-down, code first · the best-loved course in the field"
+   },
+   {
+    "t": "MIT 6.S191: Introduction to Deep Learning",
+    "by": "MIT",
+    "u": "http://introtodeeplearning.com/",
+    "k": "course",
+    "m": "free · one week of lectures and labs, re-recorded every year"
+   },
+   {
+    "t": "Dive into Deep Learning",
+    "by": "Zhang, Lipton, Li & Smola",
+    "u": "https://d2l.ai/",
+    "k": "book",
+    "m": "free · maths, code and discussion on the same page"
+   },
+   {
+    "t": "Deep Learning",
+    "by": "Goodfellow, Bengio & Courville",
+    "u": "https://www.deeplearningbook.org/",
+    "k": "book",
+    "m": "free HTML · the reference text"
+   },
+   {
+    "t": "Understanding Deep Learning",
+    "by": "Simon J.D. Prince",
+    "u": "https://udlbook.github.io/udlbook/",
+    "k": "book",
+    "m": "free PDF, slides and notebooks · modern and beautifully drawn"
+   },
+   {
+    "t": "Neural Networks and Deep Learning",
+    "by": "Michael Nielsen",
+    "u": "http://neuralnetworksanddeeplearning.com/",
+    "k": "book",
+    "m": "free · derives backprop by hand, gently"
+   },
+   {
+    "t": "NYU Deep Learning (DS-GA 1008)",
+    "by": "Yann LeCun & Alfredo Canziani",
+    "u": "https://atcold.github.io/NYU-DLSP21/",
+    "k": "course",
+    "m": "free · lectures, notes and notebooks"
+   },
+   {
+    "t": "Stanford CS231n: Deep Learning for Computer Vision",
+    "by": "Stanford",
+    "u": "https://cs231n.stanford.edu/",
+    "k": "course",
+    "m": "notes and assignments open · the CNN classic"
+   },
+   {
+    "t": "PyTorch Tutorials",
+    "by": "PyTorch",
+    "u": "https://pytorch.org/tutorials/",
+    "k": "docs",
+    "m": "official · start with 'Learn the Basics'"
+   },
+   {
+    "t": "UvA Deep Learning Tutorials",
+    "by": "University of Amsterdam",
+    "u": "https://uvadlc-notebooks.readthedocs.io/",
+    "k": "course",
+    "m": "notebooks in both PyTorch and JAX"
+   },
+   {
+    "t": "Deep Learning Specialization",
+    "by": "Andrew Ng · DeepLearning.AI",
+    "u": "https://www.coursera.org/specializations/deep-learning",
+    "k": "course",
+    "m": "free to audit · five courses"
+   },
+   {
+    "t": "micrograd",
+    "by": "Andrej Karpathy",
+    "u": "https://github.com/karpathy/micrograd",
+    "k": "code",
+    "m": "MIT · ~150 lines · autograd small enough to read in one sitting"
+   },
+   {
+    "t": "Deep Learning Tuning Playbook",
+    "by": "Google Research & Harvard",
+    "u": "https://github.com/google-research/tuning_playbook",
+    "k": "book",
+    "m": "how to actually choose hyperparameters, from people who do it daily"
+   },
+   {
+    "t": "Annotated Paper Implementations",
+    "by": "labml.ai",
+    "u": "https://nn.labml.ai/",
+    "k": "code",
+    "m": "MIT · 60+ architectures implemented in PyTorch with the paper alongside"
+   },
+   {
+    "t": "A Recipe for Training Neural Networks",
+    "by": "Andrej Karpathy",
+    "u": "http://karpathy.github.io/2019/04/25/recipe/",
+    "k": "article",
+    "m": "the debugging discipline nobody teaches you"
+   }
+  ]
+ },
+ {
+  "n": "05",
+  "id": "nlp",
+  "title": "NLP & transformers",
+  "note": "Tokenisation, embeddings, attention — where language models actually begin.",
+  "items": [
+   {
+    "t": "Stanford CS224n: NLP with Deep Learning",
+    "by": "Christopher Manning · Stanford",
+    "u": "https://web.stanford.edu/class/cs224n/",
+    "k": "course",
+    "m": "slides, notes and assignments open every year"
+   },
+   {
+    "t": "CS224n lecture videos",
+    "by": "Stanford Online",
+    "u": "https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ",
+    "k": "video",
+    "m": "the full lecture series on YouTube"
+   },
+   {
+    "t": "Hugging Face NLP Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/nlp-course",
+    "k": "course",
+    "m": "free · Apache-2.0 · transformers, datasets and tokenizers, hands-on"
+   },
+   {
+    "t": "The Illustrated Transformer",
+    "by": "Jay Alammar",
+    "u": "https://jalammar.github.io/illustrated-transformer/",
+    "k": "article",
+    "m": "the diagram everyone has seen, and for good reason"
+   },
+   {
+    "t": "The Annotated Transformer",
+    "by": "Harvard NLP",
+    "u": "https://nlp.seas.harvard.edu/annotated-transformer/",
+    "k": "code",
+    "m": "the 2017 paper, line by line, as runnable code"
+   },
+   {
+    "t": "Speech and Language Processing (3rd ed. draft)",
+    "by": "Jurafsky & Martin",
+    "u": "https://web.stanford.edu/~jurafsky/slp3/",
+    "k": "book",
+    "m": "free draft chapters · the field's standard textbook"
+   },
+   {
+    "t": "CMU CS11-711: Advanced NLP",
+    "by": "Graham Neubig · CMU",
+    "u": "https://phontron.com/class/anlp2024/",
+    "k": "course",
+    "m": "slides, videos and assignments, all public"
+   },
+   {
+    "t": "The Illustrated Word2vec",
+    "by": "Jay Alammar",
+    "u": "https://jalammar.github.io/illustrated-word2vec/",
+    "k": "article",
+    "m": "embeddings from first principles"
+   },
+   {
+    "t": "Transformers from Scratch",
+    "by": "Brandon Rohrer",
+    "u": "https://e2eml.school/transformers.html",
+    "k": "article",
+    "m": "a very patient derivation, matrices included"
+   },
+   {
+    "t": "The Transformer Family v2.0",
+    "by": "Lilian Weng",
+    "u": "https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/",
+    "k": "article",
+    "m": "every architectural variant, catalogued"
+   },
+   {
+    "t": "Attention? Attention!",
+    "by": "Lilian Weng",
+    "u": "https://lilianweng.github.io/posts/2018-06-24-attention/",
+    "k": "article",
+    "m": "where attention came from"
+   },
+   {
+    "t": "Attention Is All You Need",
+    "by": "Vaswani et al.",
+    "u": "https://arxiv.org/abs/1706.03762",
+    "k": "paper",
+    "m": "the 2017 paper itself · read it after the illustrated version"
+   },
+   {
+    "t": "Advanced NLP with spaCy",
+    "by": "Ines Montani",
+    "u": "https://course.spacy.io/",
+    "k": "course",
+    "m": "free · interactive · the practical pipeline side"
+   },
+   {
+    "t": "NLP with Transformers — notebooks",
+    "by": "Tunstall, von Werra & Wolf",
+    "u": "https://github.com/nlp-with-transformers/notebooks",
+    "k": "code",
+    "m": "the book's code, Apache-2.0, free to run"
+   }
+  ]
+ },
+ {
+  "n": "06",
+  "id": "from-scratch",
+  "title": "Build an LLM from scratch",
+  "note": "The fastest way to stop treating a model as a black box is to write one. Everything here ends in code you typed yourself.",
+  "items": [
+   {
+    "t": "Neural Networks: Zero to Hero",
+    "by": "Andrej Karpathy",
+    "u": "https://karpathy.ai/zero-to-hero.html",
+    "k": "course",
+    "m": "free · ~10 video lectures · micrograd, then makemore, then GPT"
+   },
+   {
+    "t": "Let's build GPT: from scratch, in code, spelled out",
+    "by": "Andrej Karpathy",
+    "u": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+    "k": "video",
+    "m": "2 h · a working GPT in one sitting"
+   },
+   {
+    "t": "Let's build the GPT Tokenizer",
+    "by": "Andrej Karpathy",
+    "u": "https://www.youtube.com/watch?v=zduSFxRajkE",
+    "k": "video",
+    "m": "2 h 13 · BPE, and why tokenisation causes half of all LLM weirdness"
+   },
+   {
+    "t": "Deep Dive into LLMs like ChatGPT",
+    "by": "Andrej Karpathy",
+    "u": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+    "k": "video",
+    "m": "3 h 31 · pretraining, SFT and RLHF end to end, little maths required"
+   },
+   {
+    "t": "nanoGPT",
+    "by": "Andrej Karpathy",
+    "u": "https://github.com/karpathy/nanoGPT",
+    "k": "code",
+    "m": "MIT · ~300 lines that reproduce GPT-2"
+   },
+   {
+    "t": "minGPT",
+    "by": "Andrej Karpathy",
+    "u": "https://github.com/karpathy/minGPT",
+    "k": "code",
+    "m": "MIT · the readable, minimal ancestor of nanoGPT"
+   },
+   {
+    "t": "llm.c",
+    "by": "Andrej Karpathy",
+    "u": "https://github.com/karpathy/llm.c",
+    "k": "code",
+    "m": "MIT · GPT-2 training in plain C and CUDA, no framework"
+   },
+   {
+    "t": "nanochat",
+    "by": "Andrej Karpathy",
+    "u": "https://github.com/karpathy/nanochat",
+    "k": "code",
+    "m": "the full ChatGPT pipeline — pretrain, SFT, RL, web UI — in one clean repo"
+   },
+   {
+    "t": "Stanford CS336: Language Modeling from Scratch",
+    "by": "Stanford",
+    "u": "https://stanford-cs336.github.io/spring2025/",
+    "k": "course",
+    "m": "the whole pipeline as coursework: tokenizer, model, training, evaluation"
+   },
+   {
+    "t": "CS336 lecture videos",
+    "by": "Stanford Online",
+    "u": "https://www.youtube.com/playlist?list=PLoROMvodv4rOyjdJ6_ricLKAnvmZeWTHK",
+    "k": "video",
+    "m": "all lectures, free"
+   },
+   {
+    "t": "Build a Large Language Model (From Scratch) — code",
+    "by": "Sebastian Raschka",
+    "u": "https://github.com/rasbt/LLMs-from-scratch",
+    "k": "code",
+    "m": "Apache-2.0 · every chapter's notebooks are free; the book is optional"
+   },
+   {
+    "t": "LLM Course",
+    "by": "Maxime Labonne",
+    "u": "https://github.com/mlabonne/llm-course",
+    "k": "course",
+    "m": "Apache-2.0 · roadmaps plus dozens of free Colab notebooks"
+   },
+   {
+    "t": "Hugging Face LLM Course",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/learn/llm-course",
+    "k": "course",
+    "m": "the NLP course's successor: pretraining, fine-tuning, inference"
+   },
+   {
+    "t": "modded-nanogpt",
+    "by": "Keller Jordan et al.",
+    "u": "https://github.com/KellerJordan/modded-nanogpt",
+    "k": "code",
+    "m": "the community speedrun — read the diffs to see what actually helps"
+   },
+   {
+    "t": "litgpt",
+    "by": "Lightning AI",
+    "u": "https://github.com/Lightning-AI/litgpt",
+    "k": "code",
+    "m": "Apache-2.0 · 20+ models as readable single-file implementations"
+   },
+   {
+    "t": "The Annotated GPT-2",
+    "by": "Aman Arora",
+    "u": "https://amaarora.github.io/posts/2020-02-18-annotatedGPT2.html",
+    "k": "article",
+    "m": "GPT-2 explained alongside its own code"
+   }
+  ]
+ },
+ {
+  "n": "07",
+  "id": "pretraining",
+  "title": "Pretraining & scale",
+  "note": "What changes when the run stops fitting on one GPU: parallelism, schedules, scaling laws, and the failure modes nobody warns you about.",
+  "items": [
+   {
+    "t": "The Ultra-Scale Playbook: Training LLMs on GPU Clusters",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+    "k": "book",
+    "m": "free · 5D parallelism, ZeRO, kernels · drawn from 4000+ experiments"
+   },
+   {
+    "t": "The Smol Training Playbook",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/spaces/HuggingFaceTB/smol-training-playbook",
+    "k": "book",
+    "m": "how a small model actually gets trained, decision by decision"
+   },
+   {
+    "t": "EleutherAI Cookbook",
+    "by": "EleutherAI",
+    "u": "https://github.com/EleutherAI/cookbook",
+    "k": "code",
+    "m": "MIT · practical recipes and calculators from people who train at scale"
+   },
+   {
+    "t": "Transformer Math 101",
+    "by": "EleutherAI",
+    "u": "https://blog.eleuther.ai/transformer-math/",
+    "k": "article",
+    "m": "the arithmetic of memory, FLOPs and cost, before you rent a GPU"
+   },
+   {
+    "t": "How to Scale Your Model",
+    "by": "Google DeepMind",
+    "u": "https://jax-ml.github.io/scaling-book/",
+    "k": "book",
+    "m": "free · a systems view of TPUs, parallelism and rooflines"
+   },
+   {
+    "t": "Scaling Laws for Neural Language Models",
+    "by": "Kaplan et al.",
+    "u": "https://arxiv.org/abs/2001.08361",
+    "k": "paper",
+    "m": "the original scaling-law paper"
+   },
+   {
+    "t": "Training Compute-Optimal LLMs (Chinchilla)",
+    "by": "Hoffmann et al.",
+    "u": "https://arxiv.org/abs/2203.15556",
+    "k": "paper",
+    "m": "the correction that reset the field's data budgets"
+   },
+   {
+    "t": "OLMo — a fully open language model",
+    "by": "Allen Institute for AI",
+    "u": "https://allenai.org/olmo",
+    "k": "code",
+    "m": "weights, data, code and training logs, all released"
+   },
+   {
+    "t": "nanotron",
+    "by": "Hugging Face",
+    "u": "https://github.com/huggingface/nanotron",
+    "k": "code",
+    "m": "Apache-2.0 · minimalist 3D-parallel pretraining"
+   },
+   {
+    "t": "Megatron-LM",
+    "by": "NVIDIA",
+    "u": "https://github.com/NVIDIA/Megatron-LM",
+    "k": "code",
+    "m": "the reference implementation for large-scale training"
+   },
+   {
+    "t": "DeepSpeed tutorials",
+    "by": "Microsoft",
+    "u": "https://www.deepspeed.ai/tutorials/",
+    "k": "docs",
+    "m": "ZeRO, offload and pipeline parallelism, explained by its authors"
+   },
+   {
+    "t": "Getting Started with FSDP",
+    "by": "PyTorch",
+    "u": "https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html",
+    "k": "docs",
+    "m": "the sharding you will actually reach for first"
+   },
+   {
+    "t": "Hugging Face Accelerate",
+    "by": "Hugging Face",
+    "u": "https://huggingface.co/docs/accelerate/index",
+    "k": "docs",
+    "m": "the same training loop on one GPU, eight GPUs or a TPU"
+   },
+   {
+    "t": "OPT-175B logbook",
+    "by": "Meta AI",
+    "u": "https://github.com/facebookresearch/metaseq/blob/main/projects/OPT/chronicles/OPT175B_Logbook.pdf",
+    "k": "paper",
+    "m": "the unvarnished day-by-day diary of a large run going wrong"
+   }
+  ]
+ }
+]

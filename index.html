@@ -173,6 +173,30 @@ section{padding:88px 0 0}
 
 .tail{padding:70px 0 90px;font-family:var(--mono);font-size:11.5px;color:var(--ink-4);line-height:1.8;letter-spacing:.02em}
 
+/* ---------- the one big door on this page: the reading list ---------- */
+.bigcta{
+  display:grid;grid-template-columns:1fr auto;gap:10px 28px;align-items:center;
+  margin-top:46px;padding:30px 32px;text-decoration:none;color:inherit;
+  border:1px solid var(--rule);border-left:3px solid var(--accent);
+  background:var(--paper-2);border-radius:2px;
+  transition:background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.22,1,.36,1);
+}
+.bigcta:hover{background:var(--accent-soft);border-color:var(--accent);transform:translateY(-2px)}
+.bigcta .k{grid-column:1;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-4)}
+.bigcta .t{grid-column:1;font-family:var(--serif);font-weight:330;font-size:clamp(26px,3.1vw,38px);
+  letter-spacing:-.02em;line-height:1.1;transition:color .3s ease}
+.bigcta:hover .t{color:var(--accent)}
+.bigcta .d{grid-column:1;font-size:15.5px;color:var(--ink-3);max-width:56ch;line-height:1.55}
+.bigcta .go{grid-column:2;grid-row:1/4;display:flex;align-items:center;justify-content:center;
+  width:54px;height:54px;border:1px solid var(--rule);border-radius:50%;flex:none;color:var(--ink-3);
+  transition:transform .35s cubic-bezier(.22,1,.36,1),color .3s ease,border-color .3s ease}
+.bigcta:hover .go{color:var(--accent);border-color:var(--accent);transform:translate(4px,-4px)}
+@media (max-width:980px){
+  .bigcta{grid-template-columns:minmax(0,1fr);padding:24px 22px;margin-top:34px}
+  .bigcta .go{grid-column:1;grid-row:auto;width:44px;height:44px;margin-top:6px}
+}
+
 /* mobile: the rail becomes a plain header */
 .topbar{display:none}
 @media (max-width:980px){
@@ -241,6 +265,7 @@ section{padding:88px 0 0}
     Sane Labs
   </a>
   <a class="link magnetic" href="./synth-2/"><span>Synth-2</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a class="link magnetic" href="./learn/"><span>Learn</span><svg class="arw" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div>
 
 <div class="shell" id="top">
@@ -256,6 +281,7 @@ section{padding:88px 0 0}
       <a href="#contact"><i>03</i><span>Contact</span></a>
       <a href="./notes/"><i>04</i><span>Notes</span></a>
       <a href="./synth-2/"><i>→</i><span>Synth-2 run log</span></a>
+      <a href="./learn/"><i>→</i><span>Learn</span></a>
     </nav>
     <div class="progress" aria-hidden="true"><i id="prog"></i></div>
     <div class="foot">No borrowed weights.<br>Own architecture, tokenizer<br>and training code.</div>
@@ -271,6 +297,12 @@ section{padding:88px 0 0}
         <div><dt>Published</dt><dd>2</dd></div>
         <div><dt>Borrowed weights</dt><dd>0</dd></div>
       </dl>
+      <a class="bigcta" href="/learn/">
+        <span class="k">Free · 254 links · 20 sections</span>
+        <span class="t">Learn to train models</span>
+        <span class="d">A catalogue of the free material worth your time — fast.ai, Karpathy, Stanford and MIT courses, the fine-tuning and RLHF documentation, papers, and the code to run it on a free GPU. Every link goes to the original.</span>
+        <span class="go"><svg width="16" height="16" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 10 10 3M10 3H4.5M10 3v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
     </header>
 
     <section id="models">
